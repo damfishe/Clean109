@@ -6,7 +6,7 @@
 //  Copyright © 2017 Kory Brown. All rights reserved.
 //
 
-#include "Common.h"
+#include "Common.hpp"
 
 int main() {
     

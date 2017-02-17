@@ -9,7 +9,7 @@
 #ifndef Interface_hpp
 #define Interface_hpp
 
-#include "Common.h"
+#include "Common.hpp"
 
 class Interface{
     

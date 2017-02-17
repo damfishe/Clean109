@@ -9,18 +9,20 @@
 #ifndef Transactional_Commands_hpp
 #define Transactional_Commands_hpp
 
-#include "Common.h"
+#include "Common.hpp"
 
 class Transactional_Commands {
 private:
+    vector<map<string,string> > fact;
+    vector<map<string,string> > rule;
     
 public:
-    void load();
-    void dump();
-    void inference(string command);
-    void drop(string command);
-    void fact(string fact);
-    void rule(string rule);
+    void loadCommand();
+    void dumpCommand();
+    void inferenceCommand(string command);
+    void dropCommand(string command);
+    void factCommand(string fact);
+    void ruleCommand(string rule);
 };
 
 #endif /* Transactional_Commands_hpp */
