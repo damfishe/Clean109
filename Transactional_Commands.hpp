@@ -1,28 +1,25 @@
-//
-//  Transactional_Commands.hpp
-//  CS109_SRI_CommandLine
-//
-//  Created by Kory Brown on 2/16/17.
-//  Copyright © 2017 Kory Brown. All rights reserved.
-//
-
 #ifndef Transactional_Commands_hpp
 #define Transactional_Commands_hpp
 
 #include "Common.hpp"
 
+
 class Transactional_Commands {
+    
+    typedef void (Transactional_Commands:: *command_operations)(string);
+    
 private:
-    vector<map<string,string> > fact;
-    vector<map<string,string> > rule;
+    map<string,command_operations> command;
     
 public:
-    void loadCommand();
-    void dumpCommand();
-    void inferenceCommand(string command);
-    void dropCommand(string command);
-    void factCommand(string fact);
-    void ruleCommand(string rule);
+    Transactional_Commands();
+    
+    void loadCommand(string);
+    void dumpCommand(string);
+    void inferenceCommand(string);
+    void dropCommand(string);
+    void factCommand(string);
+    void ruleCommand(string);
 };
 
 #endif /* Transactional_Commands_hpp */

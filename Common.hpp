@@ -1,11 +1,3 @@
-//
-//  Common.h
-//
-//
-//  Created by Kory Brown on 1/27/17.
-//
-//
-
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
