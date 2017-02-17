@@ -9,6 +9,7 @@
 #include <sstream>      // stringstream
 #include <vector>
 #include <map>
+#include <fstream>		/* file IO */
 
 using namespace std;
 
