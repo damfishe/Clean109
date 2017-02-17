@@ -9,6 +9,19 @@
 #ifndef Helper_hpp
 #define Helper_hpp
 
+#include "Common.h"
 
+
+class Helper{
+    
+public:
+    static void storeBase(vector<map<string,string>> base, string def);
+    static void getBase(vector<map<string,string>> base, string def);
+    static void dropBase(vector<map<string,string>> base, string def);
+    static void andBase(vector<map<string,string>> base);
+    static void orBase(vector<map<string,string>> base);
+    static void parse(string Command);
+    
+};
 
 #endif /* Helper_hpp */

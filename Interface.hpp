@@ -9,6 +9,16 @@
 #ifndef Interface_hpp
 #define Interface_hpp
 
-#include <stdio.h>
+#include "Common.h"
+
+class Interface{
+    
+private:
+    bool keepRunning;
+    
+public:
+    void run();
+    
+};
 
 #endif /* Interface_hpp */

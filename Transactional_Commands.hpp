@@ -9,6 +9,18 @@
 #ifndef Transactional_Commands_hpp
 #define Transactional_Commands_hpp
 
-#include <stdio.h>
+#include "Common.h"
+
+class Transactional_Commands {
+private:
+    
+public:
+    void load();
+    void dump();
+    void inference(string command);
+    void drop(string command);
+    void fact(string fact);
+    void rule(string rule);
+};
 
 #endif /* Transactional_Commands_hpp */

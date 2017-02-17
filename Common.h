@@ -16,7 +16,7 @@
 #include <ctype.h>
 #include <sstream>      // stringstream
 #include <vector>
-#include <maps>
+#include <map>
 
 using namespace std;
 
