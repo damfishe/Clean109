@@ -20,7 +20,7 @@ public:
     static void dropBase(vector<map<string,string> > base, string def);
     static void andBase(vector<map<string,string> > base);
     static void orBase(vector<map<string,string> > base);
-    static void parse(string Command);
+    static void parse(string input);
     
 };
 
