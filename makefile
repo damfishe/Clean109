@@ -17,4 +17,4 @@ clean:
 	rm Main.o Helper.o Interface.o Transactional_Commands.o
 
 wipe:
-	rm Main.o Helper.o Interface.o Transactional_Commands.o Main.cpp Helper.cpp Helper.hpp Interface.cpp Interface.hpp Transactional_Commands.cpp Transactional_Commands.hpp Common.h
+	rm Main.o Helper.o Interface.o Transactional_Commands.o Main.cpp Helper.cpp Helper.hpp Interface.cpp Interface.hpp Transactional_Commands.cpp Transactional_Commands.hpp Common.hpp
