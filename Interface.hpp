@@ -1,20 +1,22 @@
+//Interface.hpp
+
 #ifndef Interface_hpp
 #define Interface_hpp
 
 #include "Common.hpp"
-#include "Transactional_Commands.hpp"
+//#include "Transactional_Commands.hpp"
+#include "Helper.hpp"
 
 class Interface{
     
 private:
-    vector <Transactional_Commands*> transactionalCommands;
     bool keepRunning;
     string pathToFile;
     
 public:
-    Interface();
+//    Interface();
+//    ~Interface();
     void run();
-    ~Interface();
     
 };
 

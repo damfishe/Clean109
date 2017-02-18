@@ -1,25 +1,29 @@
+//Transactional_Commands.hpp
+
+
 #ifndef Transactional_Commands_hpp
 #define Transactional_Commands_hpp
 
 #include "Common.hpp"
 
+typedef void (*command_operations)(string);
 
 class Transactional_Commands {
     
-    typedef void (Transactional_Commands:: *command_operations)(string);
-    
 private:
-    map<string,command_operations> command;
+    map<string,command_operations> commandMap;
     
 public:
     Transactional_Commands();
     
-    void loadCommand(string);
-    void dumpCommand(string);
-    void inferenceCommand(string);
-    void dropCommand(string);
-    void factCommand(string);
-    void ruleCommand(string);
+    map<string,command_operations> getMapCommand();
+    
+    static void loadCommand(string);
+    static void dumpCommand(string);
+    static void inferenceCommand(string);
+    static void dropCommand(string);
+    static void factCommand(string);
+    static void ruleCommand(string);
 };
 
 #endif /* Transactional_Commands_hpp */

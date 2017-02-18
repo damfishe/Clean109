@@ -1,14 +1,18 @@
+//Transactional_Commands.cpp
+
 #include "Transactional_Commands.hpp"
 
 
 Transactional_Commands:: Transactional_Commands(){
     
-    command["fact"] = &Transactional_Commands::factCommand;
-    command["rule"] = &Transactional_Commands::ruleCommand;
-    command["drop"] = &Transactional_Commands::dropCommand;
-    command["inference"] = &Transactional_Commands::inferenceCommand;
-    command["load"] = &Transactional_Commands::loadCommand;
-    command["dump"] = &Transactional_Commands::dumpCommand;
+    commandMap["Fact"] = factCommand;
+    commandMap["rule"] = ruleCommand;
+    commandMap["drop"] = dropCommand;
+    commandMap["inference"] = inferenceCommand;
+    commandMap["load"] = loadCommand;
+    commandMap["dump"] = dumpCommand;
+    
+    cout << "Transactional Command initialized\n";
 
 }
 
@@ -84,9 +88,15 @@ void Transactional_Commands:: dropCommand(string command){
 }
 
 void Transactional_Commands:: factCommand(string fact){
+    cout << "Fact method called\n";
+    cout <<"Fact is: " << fact << endl;
     
 }
 
 void Transactional_Commands:: ruleCommand(string rule){
     
 }
+
+typedef void (*command_operations)(string);
+map<string,command_operations> Transactional_Commands:: getMapCommand(){ return commandMap; }
+

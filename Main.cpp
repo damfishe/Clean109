@@ -1,9 +1,14 @@
+//Main.cpp
+
 #include "Common.hpp"
-#include "Helper.hpp"
+#include "Interface.hpp"
 
 int main() {
     
-    Helper:: parse("Rule GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
+    Interface i;
+    
+    i.run();
+    
     
     return 0;
 }

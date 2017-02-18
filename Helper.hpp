@@ -1,18 +1,29 @@
+//Helper.hpp
+
 #ifndef Helper_hpp
 #define Helper_hpp
 
 #include "Common.hpp"
+#include "Transactional_Commands.hpp"
 
-
+// Singleton Class
 class Helper{
     
+private:
+    Helper(); // constructor is private to no instances of class can be created (Singleton)
+    
+    Transactional_Commands* tCommands;
+    static Helper * h_instance;
+    
 public:
-    static void storeBase(vector<string,string> base, string);
-    static void getBase(vector<string,string>base, string);
-    static void dropBase(vector<string,string> base, string);
-    static void andBase(vector<string,string> base);
-    static void orBase(vector<string,string>base);
-    static void parse(string);
+    static Helper * instance();
+    
+    void storeBase(vector<string>,string);
+    void getBase(vector<string>,string);
+    void dropBase(vector<string>,string);
+    void andBase(vector<string>);
+    void orBase(vector<string>);
+    void parse(string);
     
 };
 
