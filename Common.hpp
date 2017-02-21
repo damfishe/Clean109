@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <fstream>		/* file IO */
+#include <tuple> 
 
 using namespace std;
 
