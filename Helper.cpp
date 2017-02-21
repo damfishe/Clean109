@@ -10,11 +10,23 @@ Helper:: Helper(){
     tCommands = new Transactional_Commands;
 }
 
+// ===================================================================================
+// Instance
+// ===================================================================================
+// 	Used to access functionality of Helper class. Allows only one instance(object) to be
+//  created
+//
+//  if theres not an object type Helper created
+//	else return the object
+//
+// ===================================================================================
+
 Helper* Helper:: instance(){
-    if(!h_instance)
-        h_instance = new Helper;
+    
+    if(!h_instance) // if(h_instance == NULL)
+        h_instance = new Helper; // create a new object
     return h_instance;
-}
+} // this allows only ONE object to be created of this class
 
 void Helper::parse(string user_input)
 {
