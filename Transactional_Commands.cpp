@@ -6,11 +6,11 @@
 Transactional_Commands:: Transactional_Commands(){
     
     commandMap["Fact"] = factCommand;
-    commandMap["rule"] = ruleCommand;
-    commandMap["drop"] = dropCommand;
-    commandMap["inference"] = inferenceCommand;
-    commandMap["load"] = loadCommand;
-    commandMap["dump"] = dumpCommand;
+    commandMap["Rule"] = ruleCommand;
+    commandMap["Drop"] = dropCommand;
+    commandMap["Inference"] = inferenceCommand;
+    commandMap["Load"] = loadCommand;
+    commandMap["Dump"] = dumpCommand;
     
     cout << "Transactional Command initialized\n";
 
