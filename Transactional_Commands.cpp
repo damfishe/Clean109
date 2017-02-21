@@ -3,6 +3,16 @@
 #include "Transactional_Commands.hpp"
 
 
+// ===================================================================================
+// 	Constructor
+// ===================================================================================
+// 	Initializes map with Transactional Commands methods
+//
+//	Member:
+//		commandMap
+//
+// ===================================================================================
+
 Transactional_Commands:: Transactional_Commands(){
     
     commandMap["Fact"] = factCommand;
@@ -12,7 +22,7 @@ Transactional_Commands:: Transactional_Commands(){
     commandMap["load"] = loadCommand;
     commandMap["dump"] = dumpCommand;
     
-    cout << "Transactional Command initialized\n";
+//    cout << "Transactional Command initialized\n";
 
 }
 
