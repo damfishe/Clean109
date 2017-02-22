@@ -6,17 +6,22 @@
 
 #include "Common.hpp"
 
+
 typedef void (*command_operations)(string);
 
+class Helper; // foward declaration
+
 class Transactional_Commands {
-    
+//    friend class Helper;
 private:
     map<string,command_operations> commandMap;
+    vector<tuple<string,vector<string>>> fact;
     
 public:
     Transactional_Commands();
     
-    map<string,command_operations> getMapCommand();
+    map<string,command_operations> getMapCommand(); // getter
+    vector<tuple<string,vector<string>>> getFact(); // getter
     
     static void loadCommand(string);
     static void dumpCommand(string);

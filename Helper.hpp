@@ -4,7 +4,8 @@
 #define Helper_hpp
 
 #include "Common.hpp"
-#include "Transactional_Commands.hpp"
+
+class Transactional_Commands; // forward declaration 
 
 // Singleton Class
 class Helper{
@@ -18,12 +19,14 @@ private:
 public:
     static Helper * instance();
     
-    void storeBase(vector<string>,string);
-    void getBase(vector<string>,string);
-    void dropBase(vector<string>,string);
-    void andBase(vector<string>);
-    void orBase(vector<string>);
-    void parse(string);
+    void storeBase(vector<tuple<string,vector<string>>>,vector<string>);
+    void getBase(vector<tuple<string,vector<string>>>,string);
+    void dropBase(string);
+    void andBase();
+    void orBase();
+    void parseCommand(string);
+    void parseDefinition(string);
+    void retrieveBaseData(vector<tuple<string,vector<string>>>, string);
     
 };
 

@@ -1,11 +1,11 @@
 #include "Helper.hpp"
+#include "Transactional_Commands.hpp" // forward declaration
 
 
 Helper* Helper:: h_instance = nullptr; // used to initialized pointer
 
-//Helper.cpp
-
-Helper:: Helper(){
+Helper:: Helper()
+{
     
     tCommands = new Transactional_Commands;
 }
@@ -21,14 +21,16 @@ Helper:: Helper(){
 //
 // ===================================================================================
 
-Helper* Helper:: instance(){
+Helper* Helper:: instance()
+{
     
     if(!h_instance) // if(h_instance == NULL)
         h_instance = new Helper; // create a new object
     return h_instance;
 } // this allows only ONE object to be created of this class
 
-void Helper::parse(string user_input)
+
+void Helper::parseCommand(string user_input)
 {
     stringstream line(user_input);  //takes the contents of user_input and copies it to a string object
     // "Fact Father(Rodger, John)
@@ -41,7 +43,7 @@ void Helper::parse(string user_input)
     getline(line, command,' ');  //take the contects of the input before the space (the command) and assign it to the command string.
     
     size_t ch = user_input.find(" ");  // find the location of the space in our string
-    cout << ch << endl; //The index of the space in our stirng
+//    cout << ch << endl; //The index of the space in our stirng
     ch++; //increment size_t to account for the extra sapce.
     string rest = user_input.substr (ch);
     
@@ -75,10 +77,86 @@ void Helper::parse(string user_input)
     
     // if check to see if there is any character left if so then procceed
 
+}
+
+// ===================================================================================
+// ParseDefinition
+// ===================================================================================
+// 	Used to parse rest of string passed from parseCommand
+//
+//
+//
+//
+//
+// ===================================================================================
+
+void Helper:: parseDefinition(string def)
+{
+    string delimiter = "(";
+    size_t pos = 0; // position of delimiter
+    string key = ""; // holds the key or fact name
+    
+    pos = def.find(delimiter);
+    key = def.substr(0, pos); // assings string from given input up to delimiter
+    def.erase(0, pos + delimiter.length()); // erases delimiter and any character before it
+    cout << "Key: " << key << endl;
     
     
+    vector<string> relation;
+    delimiter = ",";
+    while ((pos = def.find(delimiter)) != string::npos) { // will loop through as many parameters except the last one
+        relation.push_back(def.substr(0, pos));
+        cout << "Relation: " << relation[relation.size()-1] << endl;
+        def.erase(0, pos + delimiter.length());
+    }
     
+    delimiter = ")";
+    pos = def.find(delimiter);
+    relation.push_back(def.substr(0, pos));
+    cout << "Relation: " << relation[relation.size()-1] << endl;
     
-    
-    
+}
+
+// ===================================================================================
+// StoreBase
+// ===================================================================================
+// 	Used to store a Fact or Rule
+//
+//
+//
+//
+//
+// ===================================================================================
+
+
+void Helper:: storeBase(vector<tuple<string,vector<string>>> base, vector<string> relation)
+{
+    tuple<string,vector<string>> fact; // tuple that has a key(fact) and vector holding relationship
+    get<1>(fact) = relation ;
+    tCommands->getFact().push_back(fact);
+}
+
+// ===================================================================================
+// RetrieveBaseData
+// ===================================================================================
+// 	Used to retrieve a Fact or Rule
+//
+//
+//
+//
+//
+// ===================================================================================
+
+void Helper:: retrieveBaseData(vector<tuple<string,vector<string>>> base, string key)
+{
+ 
+    // used to retrive reoccuring key(fact)
+    for_each(base.begin(), base.end(),[&key](decltype(*base.begin()) it) -> void // iterates through vector 
+        {
+            if (get<0>(it) == key)
+            {
+                    for(auto i:  get<1>(it))
+                        cout << i << endl;
+            }
+        });
 }

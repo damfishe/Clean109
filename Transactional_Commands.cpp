@@ -1,6 +1,7 @@
 //Transactional_Commands.cpp
 
 #include "Transactional_Commands.hpp"
+#include "Helper.hpp" // foward declaration
 
 
 Transactional_Commands:: Transactional_Commands(){
@@ -61,7 +62,8 @@ void Transactional_Commands:: loadCommand(string path){
 //
 // ===================================================================================
 
-void Transactional_Commands:: dumpCommand(string path){
+void Transactional_Commands:: dumpCommand(string path)
+{
 	const char* f = path.c_str();
     fstream file;
 	file.exceptions ( fstream::failbit | fstream::badbit );
@@ -79,24 +81,32 @@ void Transactional_Commands:: dumpCommand(string path){
   	}
 }
 
-void Transactional_Commands:: inferenceCommand(string command){
+void Transactional_Commands:: inferenceCommand(string command)
+{
     
 }
 
-void Transactional_Commands:: dropCommand(string command){
+void Transactional_Commands:: dropCommand(string command)
+{
     
 }
 
-void Transactional_Commands:: factCommand(string fact){
-    cout << "Fact method called\n";
-    cout <<"Fact is: " << fact << endl;
+void Transactional_Commands:: factCommand(string fact)
+{
+//    cout << "Fact method called\n";
+//    cout <<"Fact is: " << fact << endl;
+    
+    Helper:: instance()->parseDefinition(fact);
     
 }
 
-void Transactional_Commands:: ruleCommand(string rule){
+void Transactional_Commands:: ruleCommand(string rule)
+{
     
 }
 
 typedef void (*command_operations)(string);
 map<string,command_operations> Transactional_Commands:: getMapCommand(){ return commandMap; }
+
+vector<tuple<string,vector<string>>> Transactional_Commands:: getFact(){ return fact; }
 

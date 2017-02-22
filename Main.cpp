@@ -7,7 +7,7 @@ int main() {
     
     Interface i;
     
-//    i.run();
+    i.run();
     
 //    vector<tuple<string,vector<string>>> v; // vector that holds a tuple
 //   

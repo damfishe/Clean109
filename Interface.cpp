@@ -3,10 +3,11 @@
 #include "Interface.hpp"
 
 
-void Interface:: run(){
+void Interface:: run()
+{
     
     
-    Helper::instance()->parse("Fact Father(Roger,John)");
+    Helper::instance()->parseCommand("Fact Father(Roger,John)");
 //    Helper::instance()->parse("Rule GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
 
 
