@@ -33,7 +33,7 @@ void Transactional_Commands:: loadCommand(string path){
     fstream file;
     // line
     string l;
-	file.exceptions ( fstream::failbit | fstream::badbit );
+	file.exceptions ( fstream::badbit );
   	try 
   	{
   		// open file
@@ -70,7 +70,7 @@ void Transactional_Commands:: dumpCommand(string path)
   	try 
   	{
   		// open/create file
-	    file.open (f, ios::out);
+	    file.open (f, ios::out | ios::app);
 	    // prints to file, overrides old file
 	    file << "Hello World!";
 	    // close file
