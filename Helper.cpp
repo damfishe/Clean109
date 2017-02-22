@@ -20,7 +20,6 @@ Helper:: Helper()
 //	else return the object
 //
 // ===================================================================================
-
 Helper* Helper:: instance()
 {
     
@@ -89,9 +88,9 @@ void Helper::parseCommand(string user_input)
 //
 //
 // ===================================================================================
-
-void Helper:: parseDefinition(string def)
+void Helper:: parseDefinition(char function, string def)
 {
+    int count = 1;
     string delimiter = "(";
     size_t pos = 0; // position of delimiter
     string key = ""; // holds the key or fact name
@@ -102,20 +101,29 @@ void Helper:: parseDefinition(string def)
     cout << "Key: " << key << endl;
     
     
-    vector<string> relation;
+    vector<string> parameters;
     delimiter = ",";
     while ((pos = def.find(delimiter)) != string::npos) { // will loop through as many parameters except the last one
-        relation.push_back(def.substr(0, pos));
-        cout << "Relation: " << relation[relation.size()-1] << endl;
+        parameters.push_back(def.substr(0, pos));
+        cout << "Parameter(" << count++ << "): " << parameters[parameters.size()-1] << endl;
         def.erase(0, pos + delimiter.length());
     }
     
     delimiter = ")";
     pos = def.find(delimiter);
-    relation.push_back(def.substr(0, pos));
-    cout << "Relation: " << relation[relation.size()-1] << endl;
+    parameters.push_back(def.substr(0, pos));
+    cout << "Parameter(" << count << "): " << parameters[parameters.size()-1] << endl;
+    
+    if(function=='f')
+        storeBase(tCommands->getFact(), parameters, key);
+    else if(function=='i')
+        retrieveBaseData(tCommands->getFact(), key);
+    
+    cout << endl;
     
 }
+
+
 
 // ===================================================================================
 // StoreBase
@@ -126,14 +134,13 @@ void Helper:: parseDefinition(string def)
 //
 //
 //
-// ===================================================================================
-
-
-void Helper:: storeBase(vector<tuple<string,vector<string>>> base, vector<string> relation)
+// ==================================================================================
+void Helper:: storeBase(vector<tuple<string,vector<string>>>& base, vector<string>& relation, string key)
 {
     tuple<string,vector<string>> fact; // tuple that has a key(fact) and vector holding relationship
-    get<1>(fact) = relation ;
-    tCommands->getFact().push_back(fact);
+    get<0>(fact) = key;
+    get<1>(fact) = relation;
+    base.push_back(fact);
 }
 
 // ===================================================================================
@@ -146,17 +153,23 @@ void Helper:: storeBase(vector<tuple<string,vector<string>>> base, vector<string
 //
 //
 // ===================================================================================
-
-void Helper:: retrieveBaseData(vector<tuple<string,vector<string>>> base, string key)
+void Helper:: retrieveBaseData(vector<tuple<string,vector<string>>>& base, string key)
 {
- 
     // used to retrive reoccuring key(fact)
     for_each(base.begin(), base.end(),[&key](decltype(*base.begin()) it) -> void // iterates through vector 
         {
+            cout << key << ": ";
             if (get<0>(it) == key)
             {
-                    for(auto i:  get<1>(it))
-                        cout << i << endl;
+                for(int i=0; i < get<1>(it).size(); i++)
+                {
+                    if (i != get<1>(it).size()-1)
+                        cout << get<1>(it)[i] << ",";
+                    else
+                        cout << get<1>(it)[i] << endl;
+                }
+//                    for(auto i:  get<1>(it))
+//                        cout << i << " ";
             }
         });
 }

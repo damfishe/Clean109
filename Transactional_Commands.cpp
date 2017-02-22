@@ -83,7 +83,7 @@ void Transactional_Commands:: dumpCommand(string path)
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
-    
+    Helper:: instance()->parseDefinition('i',command);
 }
 
 void Transactional_Commands:: dropCommand(string command)
@@ -96,7 +96,7 @@ void Transactional_Commands:: factCommand(string fact)
 //    cout << "Fact method called\n";
 //    cout <<"Fact is: " << fact << endl;
     
-    Helper:: instance()->parseDefinition(fact);
+    Helper:: instance()->parseDefinition('f',fact);
     
 }
 
@@ -106,7 +106,7 @@ void Transactional_Commands:: ruleCommand(string rule)
 }
 
 typedef void (*command_operations)(string);
-map<string,command_operations> Transactional_Commands:: getMapCommand(){ return commandMap; }
+map<string,command_operations>& Transactional_Commands:: getMapCommand(){ return commandMap; }
 
-vector<tuple<string,vector<string>>> Transactional_Commands:: getFact(){ return fact; }
+vector<tuple<string,vector<string>>>& Transactional_Commands:: getFact(){ return fact; }
 

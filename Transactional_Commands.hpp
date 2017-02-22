@@ -20,8 +20,8 @@ private:
 public:
     Transactional_Commands();
     
-    map<string,command_operations> getMapCommand(); // getter
-    vector<tuple<string,vector<string>>> getFact(); // getter
+    map<string,command_operations>& getMapCommand(); // getter
+    vector<tuple<string,vector<string>>>& getFact(); // getter
     
     static void loadCommand(string);
     static void dumpCommand(string);

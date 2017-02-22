@@ -19,14 +19,14 @@ private:
 public:
     static Helper * instance();
     
-    void storeBase(vector<tuple<string,vector<string>>>,vector<string>);
-    void getBase(vector<tuple<string,vector<string>>>,string);
+    void storeBase(vector<tuple<string,vector<string>>>&,vector<string>&,string);
+    void getBase(vector<tuple<string,vector<string>>>&,string);
     void dropBase(string);
     void andBase();
     void orBase();
     void parseCommand(string);
-    void parseDefinition(string);
-    void retrieveBaseData(vector<tuple<string,vector<string>>>, string);
+    void parseDefinition(char,string);
+    void retrieveBaseData(vector<tuple<string,vector<string>>>&, string);
     
 };
 
