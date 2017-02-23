@@ -102,7 +102,7 @@ void Transactional_Commands:: factCommand(string fact)
 
 void Transactional_Commands:: ruleCommand(string rule)
 {
-    
+    Helper:: instance()->parseDefinition('r',rule);
 }
 
 typedef void (*command_operations)(string);

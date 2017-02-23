@@ -3,7 +3,24 @@
 #include "Interface.hpp"
 
 
-void Interface:: run(){
+void Interface:: run()
+{
+<<<<<<< HEAD
+=======
+    
+    
+//    Helper::instance()->parseCommand("Fact Father(Roger,John)");
+//    Helper::instance()->parseCommand("Fact Father(Roger,Albert)");
+//    Helper::instance()->parseCommand("Fact Father(Allen,Margret)");
+//     Helper::instance()->parseCommand("Inference Father($X,$Y)");
+    
+    Helper::instance()->parseCommand("Rule GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
+    Helper::instance()->parseCommand("Inference GrandMother($X,$Y)");
+
+    
+    
+   
+>>>>>>> 60aaf41c87e542c48e43ecf8e71b4093cf1e1537
 
 	//should we make it a static variable?
 	string userinput = " "; //Takes in what the user inputs
