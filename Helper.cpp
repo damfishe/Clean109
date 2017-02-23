@@ -135,6 +135,7 @@ void Helper:: parseDefinition(char function, string def)
 //
 //
 // ==================================================================================
+
 void Helper:: storeBase(vector<tuple<string,vector<string>>>& base, vector<string>& relation, string key)
 {
     tuple<string,vector<string>> fact; // tuple that has a key(fact) and vector holding relationship
