@@ -11,6 +11,7 @@
 #include <sstream>      // stringstream
 #include <vector>
 #include <map>
+#include <algorithm>
 #include <fstream>		/* file IO */
 #include <tuple> 
 

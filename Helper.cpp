@@ -261,8 +261,7 @@ void Helper:: DumpHelp(string path)
         cout << "In the dump function" << endl;
         // open/create file
         file.open (f, ios::out);
-        
-        
+        if(base.size() != 0){
                 for_each(base.begin(), base.end(),[&](decltype(*base.begin()) it) -> void // iterates through vector
                          {
                              string temp = "FACT ";
@@ -288,6 +287,9 @@ void Helper:: DumpHelp(string path)
                              //cout << temp << endl;
                              file << temp <<endl;
                          });
+        } else {
+            cout << "there are no facts to dump." << endl;
+        }
         
         // open/create file
         // close file
@@ -308,6 +310,9 @@ void Helper:: LoadHelp(string path)
     string l;
     string fact_string = "FACT";
     string rule_string = "RULE";
+    string inference_string = "INFERENCE";
+    string drop_string = "DROP";
+    string dump_string = "DUMP";
     file.exceptions ( fstream::badbit );
     try
     {
@@ -346,6 +351,18 @@ void Helper:: LoadHelp(string path)
                 cout << l << endl;
                 storeBase(tCommands->getFact(), parameters, key);
                 
+            } else if (command.compare(rule_string) == 0) {
+                //do the stuff for taking a rule out of a file.
+            } else if (command.compare(inference_string) == 0) {
+                //do the stuff for taking an inference out of a file.
+            } else if (command.compare(drop_string) == 0) {
+                //do the stuff for taking a drop out of the file.
+            } else if (command.compare(dump_string) == 0){
+                //do the stuff for taking a dump out of a file.
+                size_t ch = l.find(" ");
+                ch++;
+                string rest = l.substr (ch);
+                tCommands->getMapCommand()[command](rest);
             }
             
             //cout << l << endl;
