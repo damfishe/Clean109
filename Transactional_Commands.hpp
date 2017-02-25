@@ -16,12 +16,14 @@ class Transactional_Commands {
 private:
     map<string,command_operations> commandMap;
     vector<tuple<string,vector<string>>> fact;
+    vector<tuple<string,vector<string>>> rule;
     
 public:
     Transactional_Commands();
     
     map<string,command_operations>& getMapCommand(); // getter
     vector<tuple<string,vector<string>>>& getFact(); // getter
+    vector<tuple<string,vector<string>>>& getRule(); // getter
     
     static void loadCommand(string);
     static void dumpCommand(string);

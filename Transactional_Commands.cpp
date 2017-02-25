@@ -6,12 +6,12 @@
 
 Transactional_Commands:: Transactional_Commands(){
     
-    commandMap["Fact"] = factCommand;
-    commandMap["Rule"] = ruleCommand;
-    commandMap["Drop"] = dropCommand;
-    commandMap["Inference"] = inferenceCommand;
-    commandMap["Load"] = loadCommand;
-    commandMap["Dump"] = dumpCommand;
+    commandMap["FACT"] = factCommand;
+    commandMap["RULE"] = ruleCommand;
+    commandMap["DROP"] = dropCommand;
+    commandMap["INFERENCE"] = inferenceCommand;
+    commandMap["LOAD"] = loadCommand;
+    commandMap["DUMP"] = dumpCommand;
     
     cout << "Transactional Command initialized\n";
 
@@ -109,4 +109,6 @@ typedef void (*command_operations)(string);
 map<string,command_operations>& Transactional_Commands:: getMapCommand(){ return commandMap; }
 
 vector<tuple<string,vector<string>>>& Transactional_Commands:: getFact(){ return fact; }
+
+vector<tuple<string,vector<string>>>& Transactional_Commands:: getRule(){ return rule; }
 
