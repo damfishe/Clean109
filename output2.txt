@@ -1,0 +1,6 @@
+FACT Father(Hi,B(Hi,Bro)
+FACT Father(Hey,(Hey,Man)
+FACT Father(Sup,(Sup,Dude)
+FACT Father(Roger,John)
+FACT Father(Roger,Albert)
+FACT Father(Allen,Margret, Alliosn, Joe, Jim)

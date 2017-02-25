@@ -1,0 +1,3 @@
+FACT Father(Hi,Bro)
+FACT Father(Hey,Man)
+FACT Father(Sup,Dude)
