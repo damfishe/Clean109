@@ -144,7 +144,7 @@ vector<string> Helper:: parseRule(string input)
     
     int count = 1;
     delimiter = " ";
-    size_t pos2 = input.find(delimiter);
+    //size_t pos2 = input.find(delimiter);
     pos++; // eats up delimiter ' '(space)
     
     
@@ -183,9 +183,6 @@ void Helper:: parseDefinition(char function, string def)
     }
     else if (function=='r')
     {
-        int count = 1;
-        string delimiter = "(";
-        size_t pos = 0; // position of delimiter
         string key = parseKey(def);
         cout << "Key: " << key << endl;
         vector<string> keyParams = parseParams(def);
@@ -607,7 +604,6 @@ void Helper:: LoadHelp(string path)
                 storeBase(tCommands->getFact(), parameters, key);
                 
             } else if (command.compare(rule_string) == 0) {
-                int count = 1;
                 string delimiter = "("; //Define space right after the relation (Father) ends.
                 size_t pos2 = l.find("("); // Set the value of the
                 string key = ""; // holds the key or fact name
@@ -616,46 +612,50 @@ void Helper:: LoadHelp(string path)
                  cout << "this is l: " << l << endl;
                  cout << "this is the key: " << key << endl;
                 
-                vector<string> params;
-                delimiter = ",";
-                while ((pos = l.find(delimiter)) != string::npos) // will loop through as many parameters except the last one
-                {
-                    params.push_back(l.substr(0, pos));
-                    cout << "Parameter(" << count++ << "): " << params[params.size()-1] << endl;
-                    l.erase(0, pos + delimiter.length());
-                    //            cout << def << endl;
-                    if (l.at(2) == ')')
-                        break;
-                }
+                vector<string> params2 = parseRule(l);
                 
-                delimiter = ")";
-                pos = l.find(delimiter);
-                params.push_back(l.substr(0, pos));
-                l.erase(0, pos + delimiter.length());
-                cout << "Parameter(" << count << "): " << params[params.size()-1] << endl;
+                storeBase(tCommands->getRule(), params2, key);
                 
-                delimiter = ":-";
-                pos = l.find(delimiter);
-                l.erase(0, pos + delimiter.length()); // eats up delimiter
-                //        cout << def << endl;
-                
-                count = 1;
-                vector<string> params2;
-                delimiter = " ";
-                pos = l.find(delimiter);
-                l.erase(0, pos + delimiter.length()); // eats up delimiter
-                while ((pos = l.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
-                {
-                    params2.push_back(l.substr(0, pos));
-                    cout << "Parameter(" << count++ << "): " << params2[params2.size()-1] << endl;
-                    l.erase(0, pos + delimiter.length());
-                }
-                
-                delimiter = "\n";
-                pos = l.find(delimiter);
-                params2.push_back(l.substr(0, pos));
-                l.erase(0, pos + delimiter.length());
-                cout << "Parameter(" << count << "): " << params2[params2.size()-1] << endl;
+                //vector<string> params;
+//                delimiter = ",";
+//                while ((pos = l.find(delimiter)) != string::npos) // will loop through as many parameters except the last one
+//                {
+//                    params.push_back(l.substr(0, pos));
+//                    cout << "Parameter(" << count++ << "): " << params[params.size()-1] << endl;
+//                    l.erase(0, pos + delimiter.length());
+//                    //            cout << def << endl;
+//                    if (l.at(2) == ')')
+//                        break;
+//                }
+//                
+//                delimiter = ")";
+//                pos = l.find(delimiter);
+//                params.push_back(l.substr(0, pos));
+//                l.erase(0, pos + delimiter.length());
+//                cout << "Parameter(" << count << "): " << params[params.size()-1] << endl;
+//                
+//                delimiter = ":-";
+//                pos = l.find(delimiter);
+//                l.erase(0, pos + delimiter.length()); // eats up delimiter
+//                //        cout << def << endl;
+//                
+//                count = 1;
+//                vector<string> params2;
+//                delimiter = " ";
+//                pos = l.find(delimiter);
+//                l.erase(0, pos + delimiter.length()); // eats up delimiter
+//                while ((pos = l.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
+//                {
+//                    params2.push_back(l.substr(0, pos));
+//                    cout << "Parameter(" << count++ << "): " << params2[params2.size()-1] << endl;
+//                    l.erase(0, pos + delimiter.length());
+//                }
+//                
+//                delimiter = "\n";
+//                pos = l.find(delimiter);
+//                params2.push_back(l.substr(0, pos));
+//                l.erase(0, pos + delimiter.length());
+//                cout << "Parameter(" << count << "): " << params2[params2.size()-1] << endl;
                 
                 storeBase(tCommands->getRule(), params2, key);
                 
