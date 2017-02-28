@@ -246,7 +246,7 @@ vector<vector<string>> Helper:: retrieveFact(string key)
 {
     vector<string> params;
     vector<vector<string>> relationalData;
-     cout << key << " Fact: ";
+    cout << key << " Fact: ";
     // & in [] of lambda functions allows lambda function to acess local variables
     for_each(tCommands->getFact().begin(), tCommands->getFact().end(),[&](decltype(*tCommands->getFact().begin()) it) -> void // iterates through vector
              {
@@ -412,41 +412,69 @@ void Helper:: DumpHelp(string path)
     const char* f = path.c_str();
     fstream file;
     file.exceptions ( fstream::failbit | fstream::badbit );
-    vector<tuple<string,vector<string>>>& base = tCommands->getFact();
+    vector<tuple<string,vector<string>>>& Factbase = tCommands->getFact();
+    vector<tuple<string,vector<string>>>& Rulebase = tCommands->getRule();
     try
     {
         cout << "In the dump function" << endl;
         // open/create file
         file.open (f, ios::out);
-        if(base.size() != 0){
-                for_each(base.begin(), base.end(),[&](decltype(*base.begin()) it) -> void // iterates through vector
+        if(Factbase.size() != 0){
+                for_each(Factbase.begin(), Factbase.end(),[&](decltype(*Factbase.begin()) it) -> void // iterates through vector
                          {
                              string temp = "FACT ";
                              temp.append(get<0>(it));
                              //cout << temp << endl;
                              temp.append("(");
                              //cout << temp << endl;
-                                 for(int i=0; i < get<1>(it).size(); i++)
-                                 {
-                                     if (i != get<1>(it).size()-1){
-                                         temp.append(get<1>(it)[i]);
-                                         temp.append(",");
+                             for(int i=0; i < get<1>(it).size(); i++)
+                             {
+                                  if (i != get<1>(it).size()-1){
+                                  temp.append(get<1>(it)[i]);
+                                  temp.append(",");
                                          //cout << get<1>(it)[i] << ","; //prints out every parameter name except for last one
-                                     }else{
-                                         temp.append(get<1>(it)[i]);
-                                         temp.append(")");
+                                  }else{
+                                  temp.append(get<1>(it)[i]);
+                                  temp.append(")");
                                          //cout << get<1>(it)[i] << endl; //prints out last parameter name
-                                     }
-                                 }
+                                  }
+                              }
                                  //                    for(auto i:  get<1>(it))
                                  //                        cout << i << " ";
         
                              //cout << temp << endl;
-                             file << temp <<endl;
+                              file << temp <<endl;
                          });
         } else {
             cout << "there are no facts to dump." << endl;
         }
+        if(Rulebase.size() != 0){
+            string logicalOperater;
+              for_each(Rulebase.begin(), Rulebase.end(),[&](decltype(*Rulebase.begin()) it) -> void
+                       {
+                           string temp = "RULE ";
+                           temp.append(get<0>(it));
+                           cout << temp << endl;
+                           temp.append("($X,$Y):- ");
+                           cout << temp << endl;
+                           for(int i=0; i < get<1>(it).size(); i++)
+                           {
+                               if (i==0){
+                                   cout << "This is the logical operator " << get<1>(it)[i] << endl;
+                                   logicalOperater = get<1>(it)[i]; // holds the operator
+                                   temp.append(logicalOperater + " ");
+                               } else if (i <= get<1>(it).size()-1){
+                                   //cout << "What is this? " << get<1>(it)[i] << ", ";
+                                   temp.append(get<1>(it)[i] + " ");
+                                   cout << temp << endl;
+                               }
+                           }
+
+                           
+                           file << temp << endl;
+                       });
+        }
+        
         
         // open/create file
         // close file
@@ -478,20 +506,25 @@ void Helper:: LoadHelp(string path)
         while ( getline(file, l) )
         {
             cout << "right before string altering" << endl;
-            cout << l << endl;
-            stringstream line(l);
+            cout << "this is l before alteration: " << l << endl;
+            
+            //this process is the same as ParseCommand; Later we will use the method instead.
+            string delimeter = " ";
+            size_t pos = 0;
             string command = "";
-            getline(line, command,' ');
+            pos = l.find(delimeter);
+            command = l.substr(0, pos);
+            l.erase(0, pos + delimeter.length());
+            
             if(command.compare(fact_string) == 0){
-                //Our string is in the format example format: FACT Father(Rodger,John).
+                //Our string is in the example format: FACT Father(Rodger,John).
                 //So we need to get the relation (Father) part of the string and set it to our key variable.
                 string delimiter = "("; //Define space right after the relation (Father) ends.
                 size_t pos2 = l.find("("); // Set the value of the
                 string key = ""; // holds the key or fact name
-                size_t pos1 = l.find(" "); // finds the index of the string where the " " is located.
-                pos1++; //increment over the space to right before the relation.
                 pos2 = l.find(delimiter); //set pos2 to the index where the ( is located in the string.
-                key = l.substr(pos1, pos2); // saves the relaton part of the string as key, so it can be passed to storeBase later.
+                key = parseKey(l); // saves the relaton part of the string as key, so it can be passed to storeBase later.
+                cout << "this is l: " << l << endl;
                 cout << "this is the key: " << key << endl;
                 l.erase(0, pos2 + delimiter.length()); // erases delimiter and any character before it
                 vector<string> parameters;
@@ -509,11 +542,72 @@ void Helper:: LoadHelp(string path)
                 storeBase(tCommands->getFact(), parameters, key);
                 
             } else if (command.compare(rule_string) == 0) {
-                //do the stuff for taking a rule out of a file.
+                int count = 1;
+                string delimiter = "("; //Define space right after the relation (Father) ends.
+                size_t pos2 = l.find("("); // Set the value of the
+                string key = ""; // holds the key or fact name
+                pos2 = l.find(delimiter); //set pos2 to the index where the ( is located in the string.
+                key = parseKey(l); // saves the relaton part of the string as key, so it can be passed to storeBase later.
+                 cout << "this is l: " << l << endl;
+                 cout << "this is the key: " << key << endl;
+                
+                vector<string> params;
+                delimiter = ",";
+                while ((pos = l.find(delimiter)) != string::npos) // will loop through as many parameters except the last one
+                {
+                    params.push_back(l.substr(0, pos));
+                    cout << "Parameter(" << count++ << "): " << params[params.size()-1] << endl;
+                    l.erase(0, pos + delimiter.length());
+                    //            cout << def << endl;
+                    if (l.at(2) == ')')
+                        break;
+                }
+                
+                delimiter = ")";
+                pos = l.find(delimiter);
+                params.push_back(l.substr(0, pos));
+                l.erase(0, pos + delimiter.length());
+                cout << "Parameter(" << count << "): " << params[params.size()-1] << endl;
+                
+                delimiter = ":-";
+                pos = l.find(delimiter);
+                l.erase(0, pos + delimiter.length()); // eats up delimiter
+                //        cout << def << endl;
+                
+                count = 1;
+                vector<string> params2;
+                delimiter = " ";
+                pos = l.find(delimiter);
+                l.erase(0, pos + delimiter.length()); // eats up delimiter
+                while ((pos = l.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
+                {
+                    params2.push_back(l.substr(0, pos));
+                    cout << "Parameter(" << count++ << "): " << params2[params2.size()-1] << endl;
+                    l.erase(0, pos + delimiter.length());
+                }
+                
+                delimiter = "\n";
+                pos = l.find(delimiter);
+                params2.push_back(l.substr(0, pos));
+                l.erase(0, pos + delimiter.length());
+                cout << "Parameter(" << count << "): " << params2[params2.size()-1] << endl;
+                
+                storeBase(tCommands->getRule(), params2, key);
+                
+                
+                
             } else if (command.compare(inference_string) == 0) {
                 //do the stuff for taking an inference out of a file.
+                size_t ch = l.find(" ");
+                ch++;
+                string rest = l.substr (ch);
+                tCommands->getMapCommand()[command](rest);
             } else if (command.compare(drop_string) == 0) {
                 //do the stuff for taking a drop out of the file.
+                size_t ch = l.find(" ");
+                ch++;
+                string rest = l.substr (ch);
+                tCommands->getMapCommand()[command](rest);
             } else if (command.compare(dump_string) == 0){
                 //do the stuff for taking a dump out of a file.
                 size_t ch = l.find(" ");
