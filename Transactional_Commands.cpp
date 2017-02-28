@@ -82,7 +82,7 @@ void Transactional_Commands:: inferenceCommand(string command)
 
 void Transactional_Commands:: dropCommand(string command)
 {
-    
+    Helper:: instance()->dropBase(command);
 }
 
 void Transactional_Commands:: factCommand(string fact)

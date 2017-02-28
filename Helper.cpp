@@ -700,7 +700,48 @@ void Helper:: LoadHelp(string path)
     
 }
 
+void Helper::dropBase(string command)
+{
+    int count = 0; // iterates through the for loops
+    vector<int> factIndex;
+    for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getFact().begin(); i != tCommands->getFact().end(); i++) // iterates through vector
+    {
+         cout << "count = " << count << endl;
+         if ( command.compare(get<0>(*i)) == 0 )
+         { 
+            cout << "deleting at j = " << count << endl;
+            factIndex.push_back(count);
+         }
+        count++;
+    }
 
+    for(vector<int>::iterator i = factIndex.end() -1; i != factIndex.begin() - 1; i--)
+    {
+        cout << "index = " << *i << endl;
+        count = *i;
+        tCommands->getFact().erase(tCommands->getFact().begin() + count); 
+    }
+
+    vector<int> ruleIndex;
+    count = 0;
+    for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getRule().begin(); i != tCommands->getRule().end(); i++) // iterates through vector
+    {
+         cout << "count = " << count << endl;
+         if ( command.compare(get<0>(*i)) == 0 )
+         { 
+            cout << "deleting at j = " << count << endl;
+            ruleIndex.push_back(count);
+         }
+        count++;
+    }
+
+    for(vector<int>::iterator i = ruleIndex.end() -1; i != ruleIndex.begin() - 1; i--)
+    {
+        cout << "index = " << *i << endl;
+        count = *i;
+        tCommands->getRule().erase(tCommands->getRule().begin() + count); 
+    }
+}
 
 
 
