@@ -49,7 +49,7 @@ void Helper::parseCommand(string user_input)
     cout << "The command is: " << command << endl;
     cout << "The contents are: " << rest << endl;
     
-        
+    
     tCommands->getMapCommand()[command](rest); //calls the proper function in transactional commands
     
     // used for parsing Rule
@@ -118,7 +118,6 @@ vector<string> Helper:: parseParams(string &input)
     {
         parameters.push_back(parsedInput.substr(0, pos));
         cout << "Parameter(" << count++ << "): " << parameters[parameters.size()-1] << endl;
-        //        input.erase(0, pos + delimiter.length());
         pos++; // eats delimiter
         parsedInput = parsedInput.substr(pos, input.length());
         
@@ -135,6 +134,37 @@ vector<string> Helper:: parseParams(string &input)
     
 }
 
+vector<string> Helper:: parseRule(string input)
+{
+    vector<string> param;
+    string delimiter = ":-";
+    size_t pos = input.find(delimiter);
+    pos++; // eats up delimiter :
+    pos++; // eats up delimiter -
+    
+    int count = 1;
+    delimiter = " ";
+    size_t pos2 = input.find(delimiter);
+    pos++; // eats up delimiter ' '(space)
+    
+    
+    string parsedInput = input.substr(pos, input.length());
+    
+    while ((pos = parsedInput.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
+    {
+        param.push_back(parsedInput.substr(0, pos));
+        cout << "Parameter(" << count++ << "): " << param[param.size()-1] << endl;
+        pos++; // eats delimiter
+        parsedInput = parsedInput.substr(pos, input.length());
+    }
+    
+    delimiter = "\n";
+    pos = parsedInput.find(delimiter);
+    param.push_back(parsedInput.substr(0, pos));
+    cout << "Parameter(" << count << "): " << param[param.size()-1] << endl;
+    return param;
+}
+
 void Helper:: parseDefinition(char function, string def)
 {
     if (function=='f' | function=='i')
@@ -148,7 +178,7 @@ void Helper:: parseDefinition(char function, string def)
             storeBase(tCommands->getFact(), parameters, key);
         else if(function=='i')
         {
-            retrieveRule(parameters,key);
+//            retrieveRule(parameters,key);
         }
     }
     else if (function=='r')
@@ -156,54 +186,33 @@ void Helper:: parseDefinition(char function, string def)
         int count = 1;
         string delimiter = "(";
         size_t pos = 0; // position of delimiter
-        string key = ""; // holds the key or fact name
-        
-        pos = def.find(delimiter);
-        key = def.substr(0, pos); // assings string from given input up to delimiter
-        def.erase(0, pos + delimiter.length()); // erases delimiter and any character before it
+        string key = parseKey(def);
         cout << "Key: " << key << endl;
+        vector<string> keyParams = parseParams(def);
+
         
-        
-        vector<string> params;
-        delimiter = ",";
-        while ((pos = def.find(delimiter)) != string::npos) // will loop through as many parameters except the last one
-        {
-            params.push_back(def.substr(0, pos));
-            cout << "Parameter(" << count++ << "): " << params[params.size()-1] << endl;
-            def.erase(0, pos + delimiter.length());
-            //            cout << def << endl;
-            if (def.at(2) == ')')
-                break;
-        }
-        
-        delimiter = ")";
-        pos = def.find(delimiter);
-        params.push_back(def.substr(0, pos));
-        def.erase(0, pos + delimiter.length());
-        cout << "Parameter(" << count << "): " << params[params.size()-1] << endl;
-        
-        delimiter = ":-";
-        pos = def.find(delimiter);
-        def.erase(0, pos + delimiter.length()); // eats up delimiter
-        //        cout << def << endl;
-        
-        count = 1;
-        vector<string> params2;
-        delimiter = " ";
-        pos = def.find(delimiter);
-        def.erase(0, pos + delimiter.length()); // eats up delimiter
-        while ((pos = def.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
-        {
-            params2.push_back(def.substr(0, pos));
-            cout << "Parameter(" << count++ << "): " << params2[params2.size()-1] << endl;
-            def.erase(0, pos + delimiter.length());
-        }
-        
-        delimiter = "\n";
-        pos = def.find(delimiter);
-        params2.push_back(def.substr(0, pos));
-        def.erase(0, pos + delimiter.length());
-        cout << "Parameter(" << count << "): " << params2[params2.size()-1] << endl;
+//        delimiter = ":-";
+//        pos = def.find(delimiter);
+//        def.erase(0, pos + delimiter.length()); // eats up delimiter
+//        //        cout << def << endl;
+//        
+//        count = 1;
+        vector<string> params2 = parseRule(def);
+//        delimiter = " ";
+//        pos = def.find(delimiter);
+//        def.erase(0, pos + delimiter.length()); // eats up delimiter
+//        while ((pos = def.find(delimiter)) != string::npos)  // will loop through as many parameters except the last one
+//        {
+//            params2.push_back(def.substr(0, pos));
+//            cout << "Parameter(" << count++ << "): " << params2[params2.size()-1] << endl;
+//            def.erase(0, pos + delimiter.length());
+//        }
+//        
+//        delimiter = "\n";
+//        pos = def.find(delimiter);
+//        params2.push_back(def.substr(0, pos));
+//        def.erase(0, pos + delimiter.length());
+//        cout << "Parameter(" << count << "): " << params2[params2.size()-1] << endl;
         
         storeBase(tCommands->getRule(), params2, key);
     }
@@ -242,35 +251,79 @@ void Helper:: storeBase(vector< tuple< string,vector<string> > > &base, vector<s
 //
 //
 // ===================================================================================
-vector<vector<string>> Helper:: retrieveFact(string key)
+vector<vector<string>> Helper:: retrieveFact(string key, string &param1, string &param2)
 {
     vector<string> params;
     vector<vector<string>> relationalData;
-     cout << key << " Fact: ";
+    cout << key << " Fact: ";
     // & in [] of lambda functions allows lambda function to acess local variables
     for_each(tCommands->getFact().begin(), tCommands->getFact().end(),[&](decltype(*tCommands->getFact().begin()) it) -> void // iterates through vector
              {
                  if (get<0>(it) == key) // checks tuple if key matches
                  {
-                     for(int i=0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
+                     if (param1[0] == '$' && param2[0] == '$') // if query is generic
                      {
-                         if (i != get<1>(it).size()-1) // printing purpose: used to add commas
+                         for(int i=0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
                          {
-                             params.push_back(get<1>(it)[i]);
-                             cout << get<1>(it)[i] << ","; // prints an index in vector
+                             if (i != get<1>(it).size()-1) // printing purpose: used to add commas
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << ","; // prints an index in vector
+                             }
+                             else
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << " | "; // prints an index in vector
+                             }
                          }
-                         else
-                         {
-                             params.push_back(get<1>(it)[i]);
-                             cout << get<1>(it)[i] << " | "; // prints an index in vector
-                         }
+                         //                    for(auto i:  get<1>(it))
+                         //                        cout << i << " ";
+                         relationalData.push_back(params);
+                         params.clear();
                      }
-                     //                    for(auto i:  get<1>(it))
-                     //                        cout << i << " ";
-                     relationalData.push_back(params);
-                     params.clear();
+                     else if (param1[0] != '$' && param2[0] == '$') // if the first parameter is specific
+                     {
+                         for(int i=0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
+                         {
+                             if (i != get<1>(it).size()-1) // printing purpose: used to add commas
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << ","; // prints an index in vector
+                             }
+                             else
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << " | "; // prints an index in vector
+                             }
+                         }
+                         //                    for(auto i:  get<1>(it))
+                         //                        cout << i << " ";
+                         relationalData.push_back(params);
+                         params.clear();
+                     }
+                     else if (param1[0] == '$' && param2[0] != '$') // if the second parameters is specific
+                     {
+                         for(int i=0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
+                         {
+                             if (i != get<1>(it).size()-1) // printing purpose: used to add commas
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << ","; // prints an index in vector
+                             }
+                             else
+                             {
+                                 params.push_back(get<1>(it)[i]);
+                                 cout << get<1>(it)[i] << " | "; // prints an index in vector
+                             }
+                         }
+                         //                    for(auto i:  get<1>(it))
+                         //                        cout << i << " ";
+                         relationalData.push_back(params);
+                         params.clear();
+                     }
                  }
              });
+    cout << endl;
     
     return relationalData;
 }
@@ -289,7 +342,8 @@ void Helper:: retrieveRule(vector<string> params, string key)
                  {
                      for(int i=0; i < get<1>(it).size(); i++)
                      {
-                         if (i==0){
+                         if (i==0)
+                         {
                              cout << get<1>(it)[i] << ", ";
                              logicalOperater = get<1>(it)[i]; // holds the operator
                              
@@ -309,9 +363,6 @@ void Helper:: retrieveRule(vector<string> params, string key)
                              // need a function that will grab parameters from fact in order to determine if its a genaric inference or specific
                              
                              // need a function to pass each part of the rule for processing
-                             
-                             
-                             
                              
                          }
                          else
@@ -336,19 +387,33 @@ void Helper:: retrieveRule(vector<string> params, string key)
 
 void Helper:: andBase(vector<string> query, string key)
 {
-    
-    vector<vector<string>> relationalData = retrieveFact(parseKey(query[0])); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
     vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
+    vector<bool> paramCheck;
+    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
     
     for(int i=0; i < query.size(); i++)
-            paramData.push_back(parseParams(query[i]));
+        paramData.push_back(parseParams(query[i]));
     
-    for(int i=0; i < relationalData.size(); i++) // the size of vectors are be the same
-    { //
-         for(int j=0; j < paramData.size(); j++) // the size of vectors are the same
-         {
-             relationalData[i][j]; paramData[i][j];
-         }
+    vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    
+    // check parameters for correlation between rule targets
+    for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
+        for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
+            for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
+            {
+                string a = paramData[i][param];
+                string b = paramData[i+1][j];
+                if (paramData[i][param].compare(paramData[i+1][j]) == 0)
+                {
+                    paramCheck.push_back(true);
+                    paramIndex.push_back(make_tuple(i,param,i+1,j));
+                }
+                
+            }
+    
+    if (paramCheck.size() != paramData[0].size()) // checks to see if all paremters match, if they dont proceed
+    {
+//            retrieveFact(query[1], relationalData[get<0>(paramIndex[0])], <#string &param2#>)
     }
     
     
@@ -369,16 +434,16 @@ void Helper:: andBase(vector<string> query, string key)
     //        }
     //    }
     
-//    for_each(temp.begin(), temp.end(),[&](decltype(*temp.begin()) array) -> void // iterates through vector
-//             {
-//                 for_each(array.begin(), array.end(),[&](decltype(*array.begin()) data) -> void // iterates through vector
-//                          {
-//                              cout << "AND: " << data << endl;
-//                              
-//                          });
-//                 
-//             });
-//    
+    //    for_each(temp.begin(), temp.end(),[&](decltype(*temp.begin()) array) -> void // iterates through vector
+    //             {
+    //                 for_each(array.begin(), array.end(),[&](decltype(*array.begin()) data) -> void // iterates through vector
+    //                          {
+    //                              cout << "AND: " << data << endl;
+    //
+    //                          });
+    //
+    //             });
+    //
     cout << endl;
     
 }
@@ -408,7 +473,7 @@ void Helper:: orBase(vector<string> query, string key)
 //Tip:  create a conditional that checks to see if the fact and rule vectors are empty.  If the vector is not empty output to a file, else do nothing.
 void Helper:: DumpHelp(string path)
 {
-
+    
     const char* f = path.c_str();
     fstream file;
     file.exceptions ( fstream::failbit | fstream::badbit );
@@ -419,31 +484,31 @@ void Helper:: DumpHelp(string path)
         // open/create file
         file.open (f, ios::out);
         if(base.size() != 0){
-                for_each(base.begin(), base.end(),[&](decltype(*base.begin()) it) -> void // iterates through vector
+            for_each(base.begin(), base.end(),[&](decltype(*base.begin()) it) -> void // iterates through vector
+                     {
+                         string temp = "FACT ";
+                         temp.append(get<0>(it));
+                         //cout << temp << endl;
+                         temp.append("(");
+                         //cout << temp << endl;
+                         for(int i=0; i < get<1>(it).size(); i++)
                          {
-                             string temp = "FACT ";
-                             temp.append(get<0>(it));
-                             //cout << temp << endl;
-                             temp.append("(");
-                             //cout << temp << endl;
-                                 for(int i=0; i < get<1>(it).size(); i++)
-                                 {
-                                     if (i != get<1>(it).size()-1){
-                                         temp.append(get<1>(it)[i]);
-                                         temp.append(",");
-                                         //cout << get<1>(it)[i] << ","; //prints out every parameter name except for last one
-                                     }else{
-                                         temp.append(get<1>(it)[i]);
-                                         temp.append(")");
-                                         //cout << get<1>(it)[i] << endl; //prints out last parameter name
-                                     }
-                                 }
-                                 //                    for(auto i:  get<1>(it))
-                                 //                        cout << i << " ";
-        
-                             //cout << temp << endl;
-                             file << temp <<endl;
-                         });
+                             if (i != get<1>(it).size()-1){
+                                 temp.append(get<1>(it)[i]);
+                                 temp.append(",");
+                                 //cout << get<1>(it)[i] << ","; //prints out every parameter name except for last one
+                             }else{
+                                 temp.append(get<1>(it)[i]);
+                                 temp.append(")");
+                                 //cout << get<1>(it)[i] << endl; //prints out last parameter name
+                             }
+                         }
+                         //                    for(auto i:  get<1>(it))
+                         //                        cout << i << " ";
+                         
+                         //cout << temp << endl;
+                         file << temp <<endl;
+                     });
         } else {
             cout << "there are no facts to dump." << endl;
         }
@@ -455,7 +520,7 @@ void Helper:: DumpHelp(string path)
     catch (ifstream::failure e) {
         cerr << "Failed to dump file\n";
     }
-
+    
 }
 
 void Helper:: LoadHelp(string path)
@@ -478,11 +543,20 @@ void Helper:: LoadHelp(string path)
         while ( getline(file, l) )
         {
             cout << "right before string altering" << endl;
-            cout << l << endl;
-            stringstream line(l);
+            cout << "this is l before alteration: " << l << endl;
+            
+            // this process is the same as parseCommand; Later we will use the method instead
+            string delimiter = " ";
+            size_t pos = 0; // position of delimiter
             string command = "";
-            getline(line, command,' ');
-            if(command.compare(fact_string) == 0){
+            pos = l.find(delimiter);
+            command = l.substr(0, pos); // assings string from given input up to delimiter
+            l.erase(0, pos + delimiter.length()); // erases delimiter and any character before it
+
+            
+            if(command.compare(fact_string) == 0)
+            {
+                
                 //Our string is in the format example format: FACT Father(Rodger,John).
                 //So we need to get the relation (Father) part of the string and set it to our key variable.
                 string delimiter = "("; //Define space right after the relation (Father) ends.
@@ -530,7 +604,7 @@ void Helper:: LoadHelp(string path)
     catch ( fstream::failure e ) {
         cerr << "Failed to load file\n";
     }
-
+    
 }
 
 

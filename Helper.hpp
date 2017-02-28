@@ -28,9 +28,10 @@ public:
     void orBase(vector<string>, string);
     void parseCommand(string);
     void parseDefinition(char,string);
-    vector<vector<string>> retrieveFact(string);
-    void retrieveRule(vector<string>,string);
+    vector<string> parseRule(string);
     string parseKey(string &input);
+    vector<vector<string>> retrieveFact(string,string&,string&);
+    void retrieveRule(vector<string>,string);
     vector<string> parseParams(string &input);
     
 };
