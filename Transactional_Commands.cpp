@@ -79,7 +79,24 @@ void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vec
 void Transactional_Commands:: inferenceCommand(string command)
 {
    Helper:: instance()->ParseQuery(command);
-   //Helper:: instance()->parseDefinition('i',command);
+    Helper:: instance()->parseDefinition('i',command);
+//    if () // saves inference
+//    {
+//  
+//        vector<string> blah = retrieveRule(parameters,key);
+//        for(auto a: blah)
+//            cout << a << ;
+//        
+//        void storeBase(Helper:: t,vector<string>&,string);
+//
+//
+//    }
+//    else{ // just prints
+//        vector<string> blah = retrieveRule(parameters,key);
+//        for(auto a: blah)
+//            cout << a << ;
+//
+//    }
 }
 
 void Transactional_Commands:: dropCommand(string command)
