@@ -867,7 +867,7 @@ void Helper:: ParseQuery(string rest){
     size_t ch = rest.find(")"); // find the location of the space in our string
     temp = rest;
     rest.erase(0, ch);
-    cout << "This is rest after the erase " << endl;
+    cout << "This is rest after the erase " << rest << endl;
     //cout << ch << " This is the position of the space"
     
     cout << temp << endl;
