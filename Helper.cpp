@@ -932,10 +932,11 @@ void Helper:: ParseQuery(string rest)
     
     ch++;
     rest.erase(0, ch);
+    vector<string> parameters;
     cout << "This is rest after the erase " << endl;
     if (rest.compare(empty_string) == 0){
         //call the inference part where we only need to print
-        vector<string> parameters = parseParams(temp);
+        parameters = parseParams(temp);
         cout << "This is the basic inference case" << endl;
         key = parseKey(temp);
         cout << "this is the key: " << key << endl;
@@ -943,18 +944,19 @@ void Helper:: ParseQuery(string rest)
     } else {
         cout << "This is the other inference case" << endl;
         //there is an extra part of the string for inference.
-        string key2 = parseKey(temp);
-        vector<string> parameters = parseParams(temp);
+        string key2 = parseKey(temp); //parses our full string saved in temp to get key2 as Grandmother.
+        parameters = parseParams(temp);
         size_t space = rest.find(" ");
         space++;
-        key = rest.substr (space);
+        key = rest.substr (space); //Obtain the acronym (GF) as our key and save it for when we store the results in the fact vector.
         cout << "This is the key" << endl;
         cout << key << endl;
-        blah = retrieveRule(parameters,key2);
+        blah = retrieveRule(parameters,key2); //Use the key2 to perfrom the proper rule functionality.
     }
     //cout << ch << " This is the position of the space"
     
     //cout << temp << endl;
+    storeBase(tCommands->getFact(), blah, key);
     cout << endl << key << " Inference: ";
     for(auto b: blah)
         cout << b << " ";
