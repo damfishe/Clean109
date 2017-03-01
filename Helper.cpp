@@ -413,9 +413,9 @@ void Helper:: retrieveRule(vector<string> params, string key)
     
     
     if(logicalOperater=="AND")
-        andBase(query, key);
+        andOperator(query, key);
     else if (logicalOperater=="OR")
-        orBase(query, key);
+        orOperator(query, key);
 }
 
 // ===================================================================================
@@ -429,7 +429,7 @@ void Helper:: retrieveRule(vector<string> params, string key)
 //
 // ===================================================================================
 
-void Helper:: andBase(vector<string> query, string key)
+void Helper:: andOperator(vector<string> query, string key)
 {
     vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
     vector<bool> paramCheck;
@@ -532,7 +532,7 @@ void Helper:: andBase(vector<string> query, string key)
 //
 //
 // ===================================================================================
-void Helper:: orBase(vector<string> query, string key)
+void Helper:: orOperator(vector<string> query, string key)
 {
     
 }
