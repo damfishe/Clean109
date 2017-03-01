@@ -169,6 +169,102 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)//Makes sure the RULE
 	}
 }
 
+bool Valid_INFERENCE_Input(string inference_defenition, int& counter)
+{
+	stack<char> Rule_syntax; //Gonna be pushing '(' and '$', and they only get popped when there is a closed parentheses or the
+	//proper rules for '$' were followed
+
+	int check_if_next_char_valid = 0; //keeps track of the '$' symbol, and if the next char after that token are valid
+	int content_in_array = 0;//checks to see how many char are actually in the array
+
+	for (char& c : inference_defenition)//counts how many char are in the array, until it hits the null char or new line char
+	{
+		++content_in_array;
+	}
+
+	int i = 0;
+
+	while (inference_defenition[i] != '(')//Check before the parentheses that the relationship name is only captial or lowercase letters,
+		//no whitespaces or symbols
+	{
+		if (isalpha(inference_defenition[i]) == 0)
+		{
+			cout << "The relationship name must be only alphabets, no spaces or symbols, followed by a '('" << endl;
+			cout << "Example: 'GrandFather('" << endl;
+			cout << "Proceeding to the quit option" << endl << endl;
+			counter = 0;
+			return false;
+		}
+		++i;
+	}
+
+	for (int j = 0; j < content_in_array; ++j)//goes through the array and pushes and pops the '(' and '$' char if certain criterias
+		//are meet
+	{
+		if (inference_defenition[j] == '(') Rule_syntax.push(inference_defenition[j]);
+		if (inference_defenition[j] == '$')
+		{
+			Rule_syntax.push(inference_defenition[j]);
+			if (isupper(inference_defenition[j + 1]) != 0 && isalpha(inference_defenition[j + 1]) != 0)//if the next char after '$' is one 
+				//alphabet and it is uppercase, it is a valid char to have after '$'
+			{
+				++check_if_next_char_valid;
+			}
+			else
+			{
+				cout << "All INFERENCE parameters must ONE uppercase character, and also have a $ symbol" << endl;
+				cout << "Example: GrandFather($X,$Y) or GrandFather($X,$Y) GF" << endl;
+				cout << "Proceeding to the quit option" << endl << endl;
+				counter = 0;
+				return false;
+			}
+		}
+
+		if (check_if_next_char_valid != 0 && (inference_defenition[j + 2] == ',' || inference_defenition[j + 2] == ')'))
+			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates 
+			//there is only one char after '$', that follows the proper criterias, so pop of the '$' and set the counter back to 0
+		{
+			--check_if_next_char_valid;
+			Rule_syntax.pop();
+		}
+
+		if (inference_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came 
+			//before it, and the open parentheses is still in the stack, so pop it 
+		{
+			Rule_syntax.pop();
+		}
+	}
+
+
+	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed 
+	if (Rule_syntax.size() == 0 && check_if_next_char_valid == 0)
+	{
+		cout << "Worked so far" << endl << endl;
+		return true;
+	}
+	else
+	{
+		cout << "Returning a faliure" << endl << endl;
+		counter = 0;
+		return false;
+	}
+}
+
+bool Valid_DROP_Input(string drop_defenition, int& counter)
+{
+	int i = 0; 
+
+	if (isalpha(drop_defenition[i]) == 0)
+	{
+		cout << "The relationship name must be only alphabets, no spaces or symbols, followed by a '('" << endl;
+		cout << "Example: 'Father('" << endl;
+		cout << "Proceeding to the quit option" << endl << endl;
+		counter = 0;
+		return false;
+	}
+	++i;
+}
+
 bool Quit_Session(char answer)//Ask the user if they want to end the program, if they say yes, ask if they have saved: Yes = Quit, No = DUMP, then quit
 //if the user says no instead, ask them how many times they want the program to loop through until being asked to quit again
 {
@@ -192,7 +288,7 @@ bool Quit_Session(char answer)//Ask the user if they want to end the program, if
 		}
 		else
 		{
-			Helper::instance()->parseCommand("DUMP");
+			Helper::instance()->parseCommand("DUMP quicksave.sri");
 			cout << "Your session has been saved" << endl << "Goodbye" << endl;
 			return true;
 		}
@@ -279,6 +375,13 @@ void Interface:: run()
 		else if (first_part_of_command == "RULE")
 		{
 			if (Valid_RULE_Input(second_part_of_command, counter_to_exit) == false)
+			{
+				second_half_error_commited = true;
+			}
+		}
+		else if (first_part_of_command == "INFERENCE")
+		{
+			if (Valid_INFERENCE_Input(second_part_of_command, counter_to_exit) == false)
 			{
 				second_half_error_commited = true;
 			}
