@@ -436,12 +436,16 @@ void Helper:: andOperator(string key, vector<string> keyParams, vector<string> q
     vector<bool> paramCheck;
     vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
     
+    vector<vector<string>> relationalData;
     for(int i=0; i < query.size(); i++)
+    {
         paramData.push_back(parseParams(query[i]));
-    
-    vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+        relationalData = retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    }
+        
     
     // check parameters for correlation between rule targets
+    
     for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
         for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
              for(int param = 0; param < paramData[i].size(); param++)
@@ -463,6 +467,7 @@ void Helper:: andOperator(string key, vector<string> keyParams, vector<string> q
         vector<vector<string>> inferData = retrieveFact(parseKey(query[1]), relationalData[get<0>(paramIndex[0])][get<1>(paramIndex[0])], paramData[1][1]); // there should only be one vector contained so use index 0 to pull index to vector that has data
         cout << endl << key << " Inference: ";
         
+        // this is where the logical operator logic happens
         vector<string> match;
         // loop through vectors one by one finding if theres a match if theres not then that means thats the data we want
          for(int i=0; i < relationalData.size(); i++) // iterates through vector
@@ -546,11 +551,12 @@ void Helper:: orOperator(string key, vector<string> keyParams, vector<string> qu
     vector<bool> paramCheck;
     vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
     
+    vector<vector<string>> relationalData;
     for(int i=0; i < query.size(); i++)
+    {
         paramData.push_back(parseParams(query[i]));
-
-    cout << paramData[0][0] << "  -  " << paramData[0][1] << endl;
-    vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+        relationalData = retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    }
     
     for (vector<vector<string>>::iterator i = relationalData.begin(); i != relationalData.end(); i++)
     {
@@ -780,11 +786,6 @@ void Helper:: LoadHelp(string path)
                 
                 storeBase(tCommands->getRule(), params2, key);
                 
-                // can be used for duplicate test
-//                storeBase(tCommands->getRule(), params2, key);
-                
-                
-                
             } else if (command.compare(inference_string) == 0) {
                 //do the stuff for taking an inference out of a file.
                 size_t ch = l.find(" ");
@@ -865,10 +866,11 @@ void Helper:: ParseQuery(string rest){
     string temp = "";
     size_t ch = rest.find(")"); // find the location of the space in our string
     temp = rest;
-    //rest.erase(0, pos + ch.length());
+    rest.erase(0, ch);
+    cout << "This is rest after the erase " << endl;
     //cout << ch << " This is the position of the space"
     
-    cout << rest << endl;
+    cout << temp << endl;
 }
 
 
