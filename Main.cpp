@@ -10,10 +10,10 @@ int main() {
     
     Transactional_Commands t;
     //Tester for the dump command
-    t.loadCommand("output.txt");
+   // t.loadCommand("output.txt");
     
     i.run();
-    t.dumpCommand("output2.txt");
+    //t.dumpCommand("output2.txt");
     
 //    vector<tuple<string,vector<string>>> v; // vector that holds a tuple
 //   

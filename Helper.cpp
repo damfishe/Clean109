@@ -865,8 +865,13 @@ void Helper:: ParseQuery(string rest){
     cout << "This is rest after the erase:" << rest << endl;
     if (rest.compare(empty_string) == 0){
         //call the inference part where we only need to print
-        
+        cout << "This is the basic inference case" << endl;
+        size_t delim = temp.find("(");
+        string key = temp.substr(0, delim);
+        cout << "this is the key" << endl;
+        cout << key << endl;
     } else {
+        cout << "This is the other inference case" << endl;
         //there is an extra part of the string for inference.
         size_t space = rest.find(" ");
         space++;
@@ -875,7 +880,7 @@ void Helper:: ParseQuery(string rest){
         cout << key << endl;
     }
     //cout << ch << " This is the position of the space"
-    
+    cout << "this is the temp:" << endl;
     cout << temp << endl;
 }
 
