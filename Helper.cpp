@@ -859,6 +859,18 @@ void Helper::dropBase(string command)
     }
 }
 
+void Helper:: ParseQuery(string rest){
+    cout << "in Parse Query" << endl;
+    string empty_string = "";
+    string temp = "";
+    size_t ch = rest.find(")"); // find the location of the space in our string
+    temp = rest;
+    //rest.erase(0, pos + ch.length());
+    //cout << ch << " This is the position of the space"
+    
+    cout << rest << endl;
+}
+
 
 
 
