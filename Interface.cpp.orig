@@ -557,6 +557,20 @@ void Interface::run()
 /*
 void Interface:: run()
 {
+<<<<<<< HEAD
+
+
+//    Helper::instance()->parseCommand("FACT Father(Roger,John)");
+//    Helper::instance()->parseCommand("FACT Mother(Marry,John)");
+//    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
+//    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
+//    Helper::instance()->parseCommand("FACT Mother(Margret,Robert)");
+//    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
+Helper::instance()->parseCommand("FACT Mother(Nancy,Margret)");
+Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
+
+
+=======
     
     
     //    Helper::instance()->parseCommand("FACT Father(Roger,John)");
@@ -569,11 +583,25 @@ void Interface:: run()
     Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
     
     
+>>>>>>> 97a8ad0fb485694c9fb6b9a2afeaa04ff5e7d966
 //    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
 //    Helper::instance()->parseCommand("FACT Father(Allen,Margret, Alliosn, Joe, Jim)");
+<<<<<<< HEAD
     //Helper::instance()->parseCommand("INFERENCE Father($X,$Y)");
     //Helper::instance()->parseCommand("LOAD output.txt");
     //Helper::instance()->parseCommand("DUMP output2.txt");
+=======
+//Helper::instance()->parseCommand("INFERENCE Father($X,$Y)");
+//    Helper::instance()->parseCommand("LOAD output.txt");
+//    Helper::instance()->parseCommand("DUMP output2.txt");
+<<<<<<< HEAD
+
+
+Helper::instance()->parseCommand("RULE Parent($X,$Y):- OR Father($X,$Y) Mother($X,$Y)");
+Helper::instance()->parseCommand("INFERENCE Parent($X,$Y)");
+
+=======
+>>>>>>> 16326b512a0ff49ee468e1b09daf28604de22044
     
     
 //    Helper::instance()->parseCommand("RULE Parent($X,$Y):- OR Father($X,$Y) Mother($X,$Y)");
@@ -581,4 +609,6 @@ void Interface:: run()
       Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y) GF");
 //    Helper::instance()->parseCommand("INFERENCE Parent($X,$Y)");
     
+>>>>>>> 97a8ad0fb485694c9fb6b9a2afeaa04ff5e7d966
 }
+*/

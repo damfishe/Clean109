@@ -38,4 +38,7 @@ public:
     
 };
 
-#endif /* Helper_hpp */
+#endif
+ /* 
+Helper_hpp 
+*/
