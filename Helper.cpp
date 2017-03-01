@@ -441,7 +441,7 @@ void Helper:: andBase(vector<string> query, string key)
     // check parameters for correlation between rule targets
     for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
         for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
-            for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
+           for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
             {
                 string a = paramData[i][param]; // used for testing
                 string b = paramData[i+1][j]; // used for testing
@@ -532,7 +532,83 @@ void Helper:: andBase(vector<string> query, string key)
 // ===================================================================================
 void Helper:: orBase(vector<string> query, string key)
 {
+	cout << "KEY " << key << endl;
+	cout << "QUERY ";
+	for ( vector<string>::iterator i = query.begin(); i != query.end(); i++)
+	{
+		cout << *i << endl;
+	}
+	vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
+    vector<bool> paramCheck;
+    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
     
+    for(int i=0; i < query.size(); i++)
+        paramData.push_back(parseParams(query[i]));
+
+    cout << paramData[0][0] << "  -  " << paramData[0][1] << endl;
+    vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    
+    cout << "here\n" << relationalData.size() << relationalData[0] << endl;
+    for (vector<vector<string>>::iterator i = relationalData.begin(); i != relationalData.end(); i++)
+    {
+    	cout << "here\n" << relationalData[0].size();
+    	for (int j = 0; j < relationalData[0].size(); j++)
+    	{
+    		cout << "here\n";
+    		cout << "RELATIONALDATA " << relationalData[0][j] << endl;
+    	}	
+    }
+
+
+ //    // check parameters for correlation between rule targets
+ //    for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
+ //        for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
+ //            for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
+ //            {
+ //                string a = paramData[i][param]; // used for testing
+ //                string b = paramData[i+1][j]; // used for testing
+ //                if (paramData[i][param].compare(paramData[i+1][j]) == 0) // checks to see if param match
+ //                {
+ //                    paramCheck.push_back(true);
+ //                    paramIndex.push_back(make_tuple(i,param,i+1,j)); // records index of the leftmost rule target and its param and the compared rule target index and its param
+ //                }
+                
+ //            }
+    
+ //    // grabs data from Fact based on parameters
+ //    if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
+ //    {
+ //        vector<vector<string>> inferData = retrieveFact(parseKey(query[1]), relationalData[get<0>(paramIndex[0])][get<1>(paramIndex[0])], paramData[1][1]); // there should only be one vector contained so use index 0 to pull index to vector that has data
+ //        cout << endl << key << " Inference: ";
+        
+ //        vector<string> match;
+ //        // loop through vectors one by one finding if theres a match if theres not then that means thats the data we want
+ //         for(int i=0; i < relationalData.size(); i++) // iterates through vector
+ //            for(int param = 0; param < relationalData[i].size(); param++) // iterate throguh vector's data
+ //             for(int j=0; j < paramData[i].size(); j++) // iterate through inferData
+ //             {
+ //                 // this code looks at parameter at a time comparing it to the results of inferData
+ //                 // if the current parameter matches inferData then we dont want it ie. GrandMother($X,$Y):- Mother($X,$Z) Mother($Z,$Y)
+ //                 // we dont want the $Z parameter so this code will leave you with $X, $Y
+ //                 // the data only prints for now; and needs to be made more generic ie. nothing hard coded
+ //                 if (relationalData[i][param].compare(inferData[0][j]) == 0)
+ //                 {
+ //                     match.push_back(inferData[0][j]);
+ //                     break;
+ //                 }
+ //                 if (j == paramData[i].size()-1)
+ //                     cout << relationalData[i][param] << " ";
+ //             }
+        
+        
+ //        for(auto v: inferData) // loops through vector: v is the actual vector
+ //            for(int i=0; i<v.size(); i++) // loops through data in vector
+ //            { // doing it this way eliminate v[x][i]; just another way of looping
+ //                if (match[i].compare(v[i]) != 0)
+ //                    cout << v[i] << " ";
+ //            }
+ //        cout << endl;
+ //    }    
 }
 
 
