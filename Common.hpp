@@ -14,10 +14,9 @@
 #include <algorithm>
 #include <fstream>		/* file IO */
 #include <tuple> 
+#include <stack>
 
 using namespace std;
-
-
 
 
 #endif /* Common_h */

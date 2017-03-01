@@ -8,7 +8,7 @@ int main() {
     
     Interface i;
     
-//    Transactional_Commands t;
+    Transactional_Commands t;
     //Tester for the dump command
 //    t.loadCommand("output.txt");
     
