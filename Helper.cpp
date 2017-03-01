@@ -558,10 +558,9 @@ void Helper:: orOperator(string key, vector<string> keyParams, vector<string> qu
         relationalData = retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
     }
     
-<<<<<<< HEAD
+
     //cout << "here\n" << relationalData.size() << relationalData[0] << endl;
-=======
->>>>>>> 1a7ce044b80f5ee66827b6714a5a797ca8075f97
+
     for (vector<vector<string>>::iterator i = relationalData.begin(); i != relationalData.end(); i++)
     {
     	cout << "here\n" << relationalData[0].size();
