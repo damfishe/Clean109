@@ -21,8 +21,9 @@ public:
     
     void DumpHelp(string);
     void LoadHelp(string);
+    void ParseQuery(string);
     void storeBase(vector<tuple<string,vector<string>>>&,vector<string>&,string);
-    void getBase(vector<tuple<string,vector<string>>>&,string);
+    //void getBase(vector<tuple<string,vector<string>>>&,string);
     void dropBase(string);
     void andOperator(string,vector<string>,vector<string>);
     void orOperator(string,vector<string>,vector<string>);
