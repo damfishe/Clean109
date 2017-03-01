@@ -2,16 +2,16 @@
 
 #include "Interface.hpp"
 
-bool Valid_FACT_Input(string fact_defenition, int& counter)
+bool Valid_FACT_Input(string fact_defenition, int& counter)//Checks to see if the fact has the opening and closing parentheses, that's
+//the ONLY check it does, for the synthax  of the fact, not the content
 {
-	bool first_parantheses = false;
-	bool second_parantheses = false;
-
-	stack <char> syntax_check;
+	stack <char> syntax_check; //pushes the open parentheses and closed parentheses onto the stack, cause there should be only two
+								//one pair of parantheses in a fact
 
 	int i = 0; 
 
-	while (fact_defenition[i] != '(')
+	while (fact_defenition[i] != '(')//Check before the parentheses that the relationship name is only captial or lowercase letters,
+		//no whitespaces or symbols
 	{
 		if (isalpha(fact_defenition[i]) == 0)
 		{
@@ -24,7 +24,7 @@ bool Valid_FACT_Input(string fact_defenition, int& counter)
 		++i;
 	}
 
-	for (char& c : fact_defenition)
+	for (char& c : fact_defenition)//loop through the string char by char, and only push when encoutering a parentheses
 	{
 		if (c == '(' || c == ')') 
 		{
@@ -33,7 +33,8 @@ bool Valid_FACT_Input(string fact_defenition, int& counter)
 	}
 
 
-	if (syntax_check.size() == 2 && syntax_check.top() == ')')
+	if (syntax_check.size() == 2 && syntax_check.top() == ')') //if the stack size is two, indiciating there are two parantheses, 
+		//and the last thing to be pushed is the closing parentheses, that indicates the strings format was in the proper sythax
 	{
 		return true;
 	}
@@ -49,25 +50,27 @@ bool Valid_FACT_Input(string fact_defenition, int& counter)
 	}
 }
 
-bool Valid_RULE_Input(string rule_defenition, int& counter)
+bool Valid_RULE_Input(string rule_defenition, int& counter)//Makes sure the RULE sythax is correct
 {
-	stack<char> Rule_syntax; 
+	stack<char> Rule_syntax; //Gonna be pushing '(' and '$', and they only get popped when there is a closed parentheses or the
+	//proper rules for '$' were followed
 	
 	bool is_token_and_proper_operator_there = false;
 	
-	size_t looking_for_specific_char;
+	size_t looking_for_specific_char; //looks to see if the ":-" followed by the AND or OR logical operator is there
 
-	int check_if_next_char_valid = 0;
-	int content_in_array = 0;
+	int check_if_next_char_valid = 0; //keeps track of the '$' symbol, and if the next char after that token are valid
+	int content_in_array = 0;//checks to see how many char are actually in the array
 	
-	for (char& c : rule_defenition)
+	for (char& c : rule_defenition)//counts how many char are in the array, until it hits the null char or new line char
 	{
 		++content_in_array;
 	}
 
 	int i = 0;
 
-	while (rule_defenition[i] != '(')
+	while (rule_defenition[i] != '(')//Check before the parentheses that the relationship name is only captial or lowercase letters,
+		//no whitespaces or symbols
 	{
 		if (isalpha(rule_defenition[i]) == 0)
 		{
@@ -80,13 +83,15 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)
 		++i;
 	}
 
-	for (int j = 0; j < content_in_array; ++j)
+	for (int j = 0; j < content_in_array; ++j)//goes through the array and pushes and pops the '(' and '$' char if certain criterias
+		//are meet
 	{
 		if (rule_defenition[j] == '(') Rule_syntax.push(rule_defenition[j]);
 		if (rule_defenition[j] == '$')
 		{
 			Rule_syntax.push(rule_defenition[j]);
-			if (isupper(rule_defenition[j + 1]) != 0 && isalpha(rule_defenition[j + 1]) != 0)
+			if (isupper(rule_defenition[j + 1]) != 0 && isalpha(rule_defenition[j + 1]) != 0)//if the next char after '$' is one 
+				//alphabet and it is uppercase, it is a valid char to have after '$'
 			{
 				++check_if_next_char_valid;
 			}
@@ -101,18 +106,21 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)
 		}
 
 		if (check_if_next_char_valid != 0 && (rule_defenition[j + 2] == ',' || rule_defenition[j + 2] == ')'))
+			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates 
+			//there is only one char after '$', that follows the proper criterias, so pop of the '$' and set the counter back to 0
 		{
 			--check_if_next_char_valid;
 			Rule_syntax.pop();
 		}
 
-		if (rule_defenition[j] == ')')
+		if (rule_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came 
+			//before it, and the open parentheses is still in the stack, so pop it 
 		{
 			Rule_syntax.pop();
 		}
 	}
 
-	looking_for_specific_char = rule_defenition.find(":-OR");
+	looking_for_specific_char = rule_defenition.find(":-OR");//See if the user typed in ":-OR" or ":- OR", if not, check for AND
 
 	if (looking_for_specific_char != rule_defenition.npos)
 	{
@@ -128,7 +136,7 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)
 		}
 	}
 
-	if (is_token_and_proper_operator_there == false)
+	if (is_token_and_proper_operator_there == false)//If it can't find the OR one, look with AND with the same notation ":-AND" ":- AND"
 	{
 		looking_for_specific_char = rule_defenition.find(":-AND");
 
@@ -147,7 +155,7 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)
 		}
 	}
 
-
+	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed 
 	if (Rule_syntax.size() == 0 && check_if_next_char_valid==0 && is_token_and_proper_operator_there==true)
 	{
 		cout << "Worked so far" << endl << endl;
@@ -161,7 +169,8 @@ bool Valid_RULE_Input(string rule_defenition, int& counter)
 	}
 }
 
-bool Quit_Session(char answer)
+bool Quit_Session(char answer)//Ask the user if they want to end the program, if they say yes, ask if they have saved: Yes = Quit, No = DUMP, then quit
+//if the user says no instead, ask them how many times they want the program to loop through until being asked to quit again
 {
 	cout << "Would you like to exit out of the session? Y for yes, N for no: ";
 	cin >> answer;
@@ -194,7 +203,6 @@ bool Quit_Session(char answer)
 
 void Interface:: run()
 {
-	string userinput = " ";
 
 	string first_part_of_command = " ";//Stores the first part of the command, the type of command itself
 	char second_part_of_command[150];//Stores the second part of the command, the defenition of the command, can take in spaces
@@ -203,7 +211,7 @@ void Interface:: run()
 	char endsession = '\0'; //Takes in if they want to quit the session or not
 	int counter_to_exit = 0; //Takes in how long they want the session to loop for until being asked to quit again
 
-	string all_commands[6] = { "FACT", "RULE", "DROP", "INFERENCE", "LOAD", "DUMP" };
+	string all_commands[6] = { "FACT", "RULE", "DROP", "INFERENCE", "LOAD", "DUMP" };//All the commands the user can type in
 
 	cout << "Welcome to the Power Falcons recruiting center" << endl;
 
@@ -217,17 +225,17 @@ void Interface:: run()
 		cout << "Please enter in one of the six commands you would like to do:" << endl << "	FACT"
 			<< endl << "	RULE" << endl << "	LOAD" << endl << "	INFERENCE" << endl << "	DUMP" << endl <<
 			"	DROP" << endl << "Enter here:";
-		cin >> first_part_of_command;//
-		cin.clear();
-		cin.ignore(100, '\n');
+		cin >> first_part_of_command;
+		cin.clear();//Sets a new value for the stream's internal error state flags.
+		cin.ignore(100, '\n');//stop extracting when:(1) up to one hundred char are extracted and ignored or, (2) when you hit the newline char
 
 		cout << "Now, please enter the proper content, syntactically correct with no spaces, for " << first_part_of_command << endl
 			<< "Enter here:";
 
 		cin.get(second_part_of_command, sizeof(second_part_of_command) - 1, '\n');//get char for input stream until either the array is full
 		//or the new line char is encountered
-		cin.clear(); //Sets a new value for the stream's internal error state flags.
-		cin.ignore(100, '\n');//stop extracting when:(1) up to one hundred char are extracted and ignored or, (2) when you hit the newline char
+		cin.clear(); 
+		cin.ignore(100, '\n');
 
 		for (int i = 0; i < (int)first_part_of_command.size(); ++i) //captalizes all the words in the first part
 		{
@@ -243,7 +251,7 @@ void Interface:: run()
 		cout << second_part_of_command << endl;
 		cout << "========================================================" << endl;
 
-		for (int i = 0; i <= 6; ++i)//checks if the first word matchees any command, if not, proceed to the quit menu
+		for (int i = 0; i <= 6; ++i)//checks if the first word matches any command, if not, proceed to the quit menu
 		{
 			if (i == 6)//If you get to six, you are outside the size of the array
 			{
