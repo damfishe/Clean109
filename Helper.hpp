@@ -27,7 +27,7 @@ public:
     //void getBase(vector<tuple<string,vector<string>>>&,string);
     void dropBase(string);
     vector<string> andOperator(string,vector<string>,vector<string>);
-    void orOperator(string,vector<string>,vector<string>);
+    vector<string> orOperator(string,vector<string>,vector<string>);
     void parseCommand(string);
     void parseDefinition(char,string);
     vector<string> parseRule(string);

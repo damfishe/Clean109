@@ -554,8 +554,75 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
 //
 //
 // ===================================================================================
-void Helper:: orOperator(string key, vector<string> keyParams, vector<string> query)
+vector<string> Helper:: orOperator(string key, vector<string> keyParams, vector<string> query)
 {
+	// cout << "KEY = " << key << endl;
+
+	// for( int i = 0 ; i < keyParams.size(); i++)
+	// {
+	// 	cout << "KEYPARAMS = " << keyParams[i] << endl;
+	// }
+
+	// for( int i = 0 ; i < query.size(); i++)
+	// {
+	// 	cout << "Query = " << query[i] << endl;
+	// }
+
+    vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
+    vector<bool> paramCheck;
+    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
+    vector<string> result;
+    
+    vector<vector<vector<string>>> relationalData;
+    for(int i=0; i < query.size(); i++)
+    {
+        paramData.push_back(parseParams(query[i]));
+        relationalData.push_back(retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1])); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    }
+    
+    
+    // check parameters for correlation between rule targets
+    
+    for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
+        for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
+            for(int param = 0; param < paramData[i].size(); param++)
+                for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
+                {
+                    string a = paramData[i][param]; // used for testing
+                    string b = paramData[i+1][j]; // used for testing
+                    if (paramData[i][param].compare(paramData[i+1][j]) == 0) // checks to see if param match
+                    {
+                        paramCheck.push_back(true);
+                        paramIndex.push_back(make_tuple(i,param,i+1,j)); // records index of the leftmost rule target and its param and the compared rule target index and its param
+                    }
+                    
+                }
+    
+    // grabs data from Fact based on parameters
+    if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
+    {
+        // this is where the logical operator logic happens
+        vector<vector<vector<string>>> match;
+        // loop through each query
+        for(int i=0; i < query.size(); i++)
+        {
+        	match.push_back(retrieveFact(parseKey(query[i]),keyParams[0],keyParams[1]));
+        }
+        
+        cout << "RESULTS " << endl;
+        for(int i = 0; i < match.size(); i++)
+        {
+        	for(int param = 0; param < match[i].size(); param++)
+        	{
+        		for(int j=0; j < paramData[i].size(); j++)
+        		{
+        			result.push_back(match[i][param][j]);
+        		}
+        	}
+        }
+    }
+    return result;
+=======
 //    vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
 //    vector<bool> paramCheck;
 //    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
@@ -668,6 +735,7 @@ void Helper:: orOperator(string key, vector<string> keyParams, vector<string> qu
 //        //     }
 //        // cout << endl;
 //    }
+>>>>>>> cc700ca57582308ec4ad6c8129f7960be29f1197
 }
 
 
@@ -883,10 +951,10 @@ void Helper::dropBase(string command)
     vector<int> factIndex;
     for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getFact().begin(); i != tCommands->getFact().end(); i++) // iterates through vector
     {
-        cout << "count = " << count << endl;
+        // cout << "count = " << count << endl;
         if ( command.compare(get<0>(*i)) == 0 )
         {
-            cout << "deleting at j = " << count << endl;
+            // cout << "deleting at j = " << count << endl;
             factIndex.push_back(count);
         }
         count++;
@@ -894,7 +962,7 @@ void Helper::dropBase(string command)
     
     for(vector<int>::iterator i = factIndex.end() -1; i != factIndex.begin() - 1; i--)
     {
-        cout << "index = " << *i << endl;
+        // cout << "index = " << *i << endl;
         count = *i;
         tCommands->getFact().erase(tCommands->getFact().begin() + count);
     }
@@ -903,10 +971,10 @@ void Helper::dropBase(string command)
     count = 0;
     for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getRule().begin(); i != tCommands->getRule().end(); i++) // iterates through vector
     {
-        cout << "count = " << count << endl;
+        // cout << "count = " << count << endl;
         if ( command.compare(get<0>(*i)) == 0 )
         {
-            cout << "deleting at j = " << count << endl;
+            // cout << "deleting at j = " << count << endl;
             ruleIndex.push_back(count);
         }
         count++;
@@ -914,7 +982,7 @@ void Helper::dropBase(string command)
     
     for(vector<int>::iterator i = ruleIndex.end() -1; i != ruleIndex.begin() - 1; i--)
     {
-        cout << "index = " << *i << endl;
+        // cout << "index = " << *i << endl;
         count = *i;
         tCommands->getRule().erase(tCommands->getRule().begin() + count);
     }
