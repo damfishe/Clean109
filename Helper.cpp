@@ -301,8 +301,8 @@ vector<vector<string>> Helper:: retrieveFact(string key, string &param1, string 
                          }
                          //                    for(auto i:  get<1>(it))
                          //                        cout << i << " ";
-                         relationalData.push_back(params);
-                         params.clear();
+//                         relationalData.push_back(params);
+//                         params.clear();
                      }
                      else if (param1[0] != '$' && param2[0] == '$') // if the first parameter is specific
                      {
@@ -758,19 +758,24 @@ void Helper:: LoadHelp(string path)
                 key = parseKey(l); // saves the relaton part of the string as key, so it can be passed to storeBase later.
                 cout << "this is l: " << l << endl;
                 cout << "this is the key: " << key << endl;
-                l.erase(0, pos2 + delimiter.length()); // erases delimiter and any character before it
-                vector<string> parameters;
-                delimiter = ",";
-                while ((pos2 = l.find(delimiter)) != string::npos) { // will loop through as many parameters except the last one
-                    parameters.push_back(l.substr(0, pos2));
-                    l.erase(0, pos2 + delimiter.length());
-                }
                 
-                delimiter = ")";
-                pos2 = l.find(delimiter);
-                parameters.push_back(l.substr(0, pos2)); //push part of our string, string from the input file
-                cout << "right before call to store Base." << endl;
-                cout << l << endl;
+                vector<string> parameters;
+                
+//                l.erase(0, pos2 + delimiter.length()); // erases delimiter and any character before it
+//                delimiter = ",";
+//                while ((pos2 = l.find(delimiter)) != string::npos) { // will loop through as many parameters except the last one
+//                    parameters.push_back(l.substr(0, pos2));
+//                    l.erase(0, pos2 + delimiter.length());
+//                }
+//                
+//                delimiter = ")";
+//                pos2 = l.find(delimiter);
+//                parameters.push_back(l.substr(0, pos2)); //push part of our string, string from the input file
+//                cout << "right before call to store Base." << endl;
+//                cout << l << endl;
+                
+                
+                parameters = parseParams(l);
                 storeBase(tCommands->getFact(), parameters, key);
                 
             } else if (command.compare(rule_string) == 0) {
