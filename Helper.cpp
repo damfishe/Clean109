@@ -220,6 +220,8 @@ void Helper:: parseDefinition(char function, string def)
             storeBase(tCommands->getFact(), parameters, key);
         else if(function=='i')
         {
+//           vector<string> blah = retrieveRule(parameters,key);
+            
             retrieveRule(parameters,key);
         }
     }
@@ -301,8 +303,8 @@ vector<vector<string>> Helper:: retrieveFact(string key, string &param1, string 
                          }
                          //                    for(auto i:  get<1>(it))
                          //                        cout << i << " ";
-                         //                         relationalData.push_back(params);
-                         //                         params.clear();
+                                                  relationalData.push_back(params);
+                                                  params.clear();
                      }
                      else if (param1[0] != '$' && param2[0] == '$') // if the first parameter is specific
                      {
@@ -436,16 +438,14 @@ void Helper:: andOperator(string key, vector<string> keyParams, vector<string> q
     vector<bool> paramCheck;
     vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
     
-    vector<vector<string>> relationalData;
-    for(int i=0; i < query.size(); i++)
-    {
-        paramData.push_back(parseParams(query[i]));
-        relationalData = retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
-    }
     
+    for(int i=0; i < query.size(); i++)
+        paramData.push_back(parseParams(query[i]));
+    
+     vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
+    //this variable pulls the facts for the first rule target only; the preceding rule target may used the first rule target which will be handeled later
     
     // check parameters for correlation between rule targets
-    
     for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
         for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
             for(int param = 0; param < paramData[i].size(); param++)
