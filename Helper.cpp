@@ -208,7 +208,7 @@ vector<string> Helper:: parseRule(string input)
 
 void Helper:: parseDefinition(char function, string def)
 {
-    if (function=='f' | function=='i')
+    if (function=='f' | function=='i') //
     {
         string key = parseKey(def);
         cout << "Key: " << key << endl;
@@ -222,12 +222,12 @@ void Helper:: parseDefinition(char function, string def)
             retrieveRule(parameters,key);
         }
     }
-    else if (function=='r')
+    else if (function=='r') // for rule
     {
 
         string key = parseKey(def);
         cout << "Key: " << key << endl;
-        vector<string> keyParams = parseParams(def);
+//        vector<string> keyParams = parseParams(def); unused may need later
 
         vector<string> params2 = parseRule(def);
         storeBase(tCommands->getRule(), params2, key);
@@ -413,9 +413,9 @@ void Helper:: retrieveRule(vector<string> params, string key)
     
     
     if(logicalOperater=="AND")
-        andOperator(query, key);
+        andOperator(key, params, query);
     else if (logicalOperater=="OR")
-        orOperator(query, key);
+        orOperator(key, params, query);
 }
 
 // ===================================================================================
@@ -429,7 +429,7 @@ void Helper:: retrieveRule(vector<string> params, string key)
 //
 // ===================================================================================
 
-void Helper:: andOperator(vector<string> query, string key)
+void Helper:: andOperator(string key, vector<string> keyParams, vector<string> query)
 {
     vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
     vector<bool> paramCheck;
@@ -443,17 +443,18 @@ void Helper:: andOperator(vector<string> query, string key)
     // check parameters for correlation between rule targets
     for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
         for(int param = 0; param < paramData[i].size(); param++) // iterates the leftmost rule target parameters
-           for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
-            {
-                string a = paramData[i][param]; // used for testing
-                string b = paramData[i+1][j]; // used for testing
-                if (paramData[i][param].compare(paramData[i+1][j]) == 0) // checks to see if param match
+             for(int param = 0; param < paramData[i].size(); param++)
+               for(int j=0; j < paramData[i+1].size(); j++) // iterates rule target paremeters to the right of leftmost
                 {
-                    paramCheck.push_back(true);
-                    paramIndex.push_back(make_tuple(i,param,i+1,j)); // records index of the leftmost rule target and its param and the compared rule target index and its param
+                    string a = paramData[i][param]; // used for testing
+                    string b = paramData[i+1][j]; // used for testing
+                    if (paramData[i][param].compare(paramData[i+1][j]) == 0) // checks to see if param match
+                    {
+                        paramCheck.push_back(true);
+                        paramIndex.push_back(make_tuple(i,param,i+1,j)); // records index of the leftmost rule target and its param and the compared rule target index and its param
+                    }
+                    
                 }
-                
-            }
     
     // grabs data from Fact based on parameters
     if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
@@ -532,7 +533,7 @@ void Helper:: andOperator(vector<string> query, string key)
 //
 //
 // ===================================================================================
-void Helper:: orOperator(vector<string> query, string key)
+void Helper:: orOperator(string key, vector<string> keyParams, vector<string> query)
 {
 	cout << "KEY " << key << endl;
 	cout << "QUERY ";
@@ -550,7 +551,6 @@ void Helper:: orOperator(vector<string> query, string key)
     cout << paramData[0][0] << "  -  " << paramData[0][1] << endl;
     vector<vector<string>> relationalData = retrieveFact(parseKey(query[0]),paramData[0][0],paramData[0][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
     
-    cout << "here\n" << relationalData.size() << relationalData[0] << endl;
     for (vector<vector<string>>::iterator i = relationalData.begin(); i != relationalData.end(); i++)
     {
     	cout << "here\n" << relationalData[0].size();
