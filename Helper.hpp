@@ -17,6 +17,7 @@ private:
     static Helper * h_instance;
     
 public:
+    ~Helper();
     static Helper * instance();
     
     void DumpHelp(string);

@@ -10,6 +10,12 @@ Helper:: Helper()
     tCommands = new Transactional_Commands;
 }
 
+Helper:: ~Helper()
+{
+    
+    delete tCommands;
+}
+
 // ===================================================================================
 // Instance
 // ===================================================================================
@@ -466,6 +472,7 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
     if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
     {
         vector<vector<string>> relationalData = retrieveFact(parseKey(query[1]), factData[get<0>(paramIndex[0])][get<1>(paramIndex[0])], paramData[1][1]); // there should only be one vector contained so use index 0 to pull index to vector that has data
+        // this pulls the data based on the correlation between rule target
         cout << endl << key << " Inference: ";
         
         // this is where the logical operator logic happens
