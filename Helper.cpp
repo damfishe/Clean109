@@ -249,12 +249,9 @@ void Helper:: parseDefinition(char function, string def)
 //
 //
 // ==================================================================================
-<<<<<<< HEAD
 
-void Helper:: storeBase(vector<tuple<string,vector<string>>>& base, vector<string>& relation, string key)
-=======
+
 void Helper:: storeBase(vector< tuple< string,vector<string> > > &base, vector<string> &params, string key)
->>>>>>> e7f090ab5ddc50f9f50dbb82f5f3660b564a9a15
 {
     tuple<string,vector<string>> fact; // tuple that has a key(fact) and vector holding relationship
     get<0>(fact) = key;
