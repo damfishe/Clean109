@@ -224,12 +224,12 @@ void Helper:: parseDefinition(char function, string def)
         
         if(function=='f')
             storeBase(tCommands->getFact(), parameters, key);
-        else if(function=='i')
-        {
-//           vector<string> blah = retrieveRule(parameters,key);
-            
-            retrieveRule(parameters,key);
-        }
+//        else if(function=='i')
+//        {
+////           vector<string> blah = retrieveRule(parameters,key); //commented out for now since it is all being handled in parse query.
+//            
+//            retrieveRule(parameters,key);
+//        }
     }
     else if (function=='r') // for rule
     {
@@ -374,7 +374,7 @@ vector<string> Helper:: retrieveRule(vector<string> params, string key)
     vector<string> query;
     string logicalOperater;
     
-    cout << key << " Rule" << ": ";
+//    cout << key << " Rule" << ": ";
     // & in [] of lambda functions allows lambda function to acess local variables
     for_each(tCommands->getRule().begin(), tCommands->getRule().end(),[&](decltype(*tCommands->getRule().begin()) it) -> void // iterates through vector
              {
@@ -473,7 +473,7 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
     {
         vector<vector<string>> relationalData = retrieveFact(parseKey(query[1]), factData[get<0>(paramIndex[0])][get<1>(paramIndex[0])], paramData[1][1]); // there should only be one vector contained so use index 0 to pull index to vector that has data
         // this pulls the data based on the correlation between rule target
-        cout << endl << key << " Inference: ";
+//        cout << endl << key << " Inference: ";
         
         // this is where the logical operator logic happens
         vector<string> match;
@@ -493,7 +493,7 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
                     }
                     if (j == paramData[i].size()-1)
                     {
-                        cout << factData[i][param] << " ";
+//                        cout << factData[i][param] << " ";
                         inferData.push_back(factData[i][param]);
                     }
                 }
@@ -504,7 +504,7 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
             { // doing it this way eliminate v[x][i]; just another way of looping
                 if (match[i].compare(v[i]) != 0)
                 {
-                    cout << v[i] << " ";
+//                    cout << v[i] << " ";
                     inferData.push_back(v[i]);
 
                 }
@@ -539,7 +539,7 @@ vector<string> Helper:: andOperator(string key, vector<string> keyParams, vector
     //
     //             });
     //
-    cout << endl;
+//    cout << endl;
     return inferData;
     
 }
@@ -889,17 +889,45 @@ void Helper::dropBase(string command)
     }
 }
 
-void Helper:: ParseQuery(string rest){
+void Helper:: ParseQuery(string rest)
+{
+    vector<string> blah;
+    string key;
     cout << "in Parse Query" << endl;
     string empty_string = "";
     string temp = "";
     size_t ch = rest.find(")"); // find the location of the space in our string
     temp = rest;
+    
+    ch++;
     rest.erase(0, ch);
     cout << "This is rest after the erase " << endl;
+    if (rest.compare(empty_string) == 0){
+        //call the inference part where we only need to print
+        vector<string> parameters = parseParams(temp);
+        cout << "This is the basic inference case" << endl;
+        key = parseKey(temp);
+        cout << "this is the key: " << key << endl;
+        blah = retrieveRule(parameters,key);
+    } else {
+        cout << "This is the other inference case" << endl;
+        //there is an extra part of the string for inference.
+        string key2 = parseKey(temp);
+        vector<string> parameters = parseParams(temp);
+        size_t space = rest.find(" ");
+        space++;
+        key = rest.substr (space);
+        cout << "This is the key" << endl;
+        cout << key << endl;
+        blah = retrieveRule(parameters,key2);
+    }
     //cout << ch << " This is the position of the space"
     
-    cout << temp << endl;
+    //cout << temp << endl;
+    cout << endl << key << " Inference: ";
+    for(auto b: blah)
+        cout << b << " ";
+    cout << endl;
 }
 
 
