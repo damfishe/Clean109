@@ -208,11 +208,8 @@ vector<string> Helper:: parseRule(string input)
 
 void Helper:: parseDefinition(char function, string def)
 {
-<<<<<<< HEAD
-    if (function=='f' | function=='i') //
-=======
+
     if (function=='f' || function=='i')
->>>>>>> 45796253548ed943c28e7a7a7c5759ad2e03133e
     {
         string key = parseKey(def);
         cout << "Key: " << key << endl;
