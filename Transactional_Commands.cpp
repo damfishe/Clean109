@@ -69,6 +69,7 @@ void Transactional_Commands:: loadCommand(string path){
 void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vector<string>>>& base)
 {
     cout << "start of dump function" << endl;
+    cout << path << endl;
     Helper:: instance()->DumpHelp(path);
     cout << "end of dump function" << endl;
 }
@@ -77,7 +78,8 @@ void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vec
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
-    Helper:: instance()->parseDefinition('i',command);
+   Helper:: instance()->ParseQuery(command);
+   Helper:: instance()->parseDefinition('i',command);
 }
 
 void Transactional_Commands:: dropCommand(string command)
