@@ -79,7 +79,7 @@ void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vec
 void Transactional_Commands:: inferenceCommand(string command)
 {
    Helper:: instance()->ParseQuery(command);
-   Helper:: instance()->parseDefinition('i',command);
+   //Helper:: instance()->parseDefinition('i',command);
 }
 
 void Transactional_Commands:: dropCommand(string command)
