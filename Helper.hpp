@@ -25,14 +25,14 @@ public:
     void storeBase(vector<tuple<string,vector<string>>>&,vector<string>&,string);
     //void getBase(vector<tuple<string,vector<string>>>&,string);
     void dropBase(string);
-    void andOperator(string,vector<string>,vector<string>);
+    vector<string> andOperator(string,vector<string>,vector<string>);
     void orOperator(string,vector<string>,vector<string>);
     void parseCommand(string);
     void parseDefinition(char,string);
     vector<string> parseRule(string);
     string parseKey(string &input);
     vector<vector<string>> retrieveFact(string,string&,string&);
-    void retrieveRule(vector<string>,string);
+    vector<string> retrieveRule(vector<string>,string);
     vector<string> parseParams(string &input);
     
 };
