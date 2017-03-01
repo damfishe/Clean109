@@ -552,7 +552,6 @@ void Helper:: orOperator(string key, vector<string> keyParams, vector<string> qu
         relationalData = retrieveFact(parseKey(query[i]),paramData[i][0],paramData[i][1]); // holds data from fact from each individual query in rule ie. Grandmother():- Mother() Mother()
     }
     
-<<<<<<< HEAD
 
     //cout << "here\n" << relationalData.size() << relationalData[0] << endl;
 
@@ -581,9 +580,7 @@ void Helper:: orOperator(string key, vector<string> keyParams, vector<string> qu
  //                }
                 
  //            }
-=======
->>>>>>> c0d4bcf11cd19077b414bd387ed2e2b3adb2149e
-    
+
     // check parameters for correlation between rule targets
     
     for(int i=0; i < paramData.size()-1; i++) // controls the leftmost rule target  Mother($x,$z)<-leftmost Mother($z,$y)
@@ -750,10 +747,13 @@ void Helper:: LoadHelp(string path)
     string drop_string = "DROP";
     string dump_string = "DUMP";
     file.exceptions ( fstream::badbit );
+	cout << "How do you make this project in a week and a half?" << endl;
     try
     {
         // open file
-        file.open (f, ios::in);
+		file.open (f, ios::in);
+		cout << "Trying to open file" << endl;
+
         while ( getline(file, l) )
         {
             cout << "right before string altering" << endl;

@@ -271,7 +271,7 @@ bool Valid_DROP_Input(string drop_defenition, int& counter)
 
 bool Valid_DUMP_Input(string dump_defenition, int& counter)
 {
-	
+
 	size_t looking_for_specific_file_ending = dump_defenition.find(".sri");
 
 	if (looking_for_specific_file_ending != dump_defenition.npos)
@@ -288,6 +288,73 @@ bool Valid_DUMP_Input(string dump_defenition, int& counter)
 	}
 }
 
+bool Valid_LOAD_Input(string path, int& counter)
+{
+	bool syntax_correct = false;
+	const char* f = path.c_str();
+	fstream file;
+	// line
+	string line;
+	file.exceptions(fstream::badbit);
+	try
+	{
+		// open file
+		file.open(f, ios::in);
+		while (getline(file, line))
+		{
+			cout << "right before string altering" << endl;
+			cout << "this is l before alteration: " << line << endl;
+
+			//this process is the same as ParseCommand; Later we will use the method instead.
+			string delimeter = " ";
+			size_t pos = 0;
+			string command = "";
+			pos = line.find(delimeter);
+			command = line.substr(0, pos);
+			line.erase(0, pos + delimeter.length());
+
+			size_t ch = line.find(" ");
+			ch++;
+			string rest = line.substr(ch);
+			
+			for (int i = 0; i < (int)command.size(); ++i) //captalizes all the words in the first part
+			{
+				command[i] = toupper(command[i]);
+				cout << command[i];
+				cout << endl;
+			}
+
+			if (command == "FACT"){
+				syntax_correct = Valid_FACT_Input(rest, counter);
+			}
+			else if (command == "RULE"){
+				syntax_correct = Valid_RULE_Input(rest, counter);
+			}
+			else if (command == "DROP"){
+				syntax_correct = Valid_DROP_Input(rest, counter);
+			}
+			else if (command == "INFERENCE"){
+				syntax_correct = Valid_INFERENCE_Input(rest, counter);
+			}
+			else if (command == "DUMP"){
+				syntax_correct = Valid_DUMP_Input(rest, counter);
+			}
+
+		
+			if (syntax_correct == false){
+				cout << "One of the lines wasn't typed properly, please go back and fix that line in that file" << endl;
+				cout << "That line is :" << command + " " + rest << endl;
+				return false;
+			}
+		}
+	}
+	catch (fstream::failure e) {
+		cerr << "Failed to load file\n";
+	}
+
+	cout << "It worked" << endl;
+	return true;
+}
 
 bool Quit_Session(char answer)//Ask the user if they want to end the program, if they say yes, ask if they have saved: Yes = Quit, No = DUMP, then quit
 //if the user says no instead, ask them how many times they want the program to loop through until being asked to quit again
@@ -320,6 +387,34 @@ bool Quit_Session(char answer)//Ask the user if they want to end the program, if
 
 	return false;
 }
+
+/*
+bool all_valid_syntax_functions(string command_names, string command_definitions, int& counter)
+{
+	if (command_names == "FACT"){
+		return Valid_FACT_Input(command_definitions, counter);
+	}
+	else if (command_names == "RULE"){
+		return Valid_RULE_Input(command_definitions, counter);
+	}
+	else if (command_names == "DROP"){
+		return Valid_DROP_Input(command_definitions, counter);
+	}
+	else if (command_names == "INFERENCE"){
+		return Valid_INFERENCE_Input(command_definitions, counter);
+	}
+	else if (command_names == "DUMP"){
+		return Valid_DUMP_Input(command_definitions, counter);
+	}
+	else if (command_names == "LOAD"){
+		return Valid_LOAD_Input(command_definitions, counter);
+	}
+	else {
+		return false;
+	}
+
+}
+*/
 
 void Interface::run()
 {
@@ -389,6 +484,7 @@ void Interface::run()
 			}
 		}
 
+		
 		if (first_part_of_command == "FACT")
 		{
 			if (Valid_FACT_Input(second_part_of_command, counter_to_exit) == false)
@@ -424,7 +520,15 @@ void Interface::run()
 				second_half_error_commited = true;
 			}
 		}
-
+		else if (first_part_of_command == "LOAD")
+		{
+			if (Valid_LOAD_Input(second_part_of_command, counter_to_exit) == false)
+			{
+				second_half_error_commited = true;
+			}
+		}
+		
+		cout << "checking if the errors are commited or not" << endl;
 		if (!first_half_error_commited && !second_half_error_commited)//If there are no errors in the input, pass it into the function
 		{
 			cout << "it works" << endl;
