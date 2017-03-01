@@ -4,7 +4,7 @@
 #define Interface_hpp
 
 #include "Common.hpp"
-//#include "Transactional_Commands.hpp"
+#include "Transactional_Commands.hpp"
 #include "Helper.hpp"
 
 class Interface{
@@ -14,8 +14,8 @@ private:
     string pathToFile;
     
 public:
-//    Interface();
-//    ~Interface();
+    //Interface();
+    //~Interface();
     void run();
     
 };
