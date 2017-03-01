@@ -6,12 +6,13 @@
 
 Transactional_Commands:: Transactional_Commands(){
     
-    commandMap["Fact"] = factCommand;
-    commandMap["Rule"] = ruleCommand;
-    commandMap["Drop"] = dropCommand;
-    commandMap["Inference"] = inferenceCommand;
-    commandMap["Load"] = loadCommand;
-    commandMap["Dump"] = dumpCommand;
+    commandMap["FACT"] = factCommand;
+    commandMap["RULE"] = ruleCommand;
+    commandMap["DROP"] = dropCommand;
+    commandMap["INFERENCE"] = inferenceCommand;
+    commandMap["LOAD"] = loadCommand;
+    commandMap["DUMP"] = dumpCommand;
+    
     
     cout << "Transactional Command initialized\n";
 
@@ -29,25 +30,28 @@ Transactional_Commands:: Transactional_Commands(){
 // ===================================================================================
 
 void Transactional_Commands:: loadCommand(string path){
-    const char* f = path.c_str();
-    fstream file;
-    // line
-    string l;
-	file.exceptions ( fstream::badbit );
-  	try 
-  	{
-  		// open file
-	    file.open (f, ios::in);
-	    while ( getline(file, l) )
-    	{
-    		cout << l << endl;
-    	}
-	    // close file
-	    file.close();
-  	}
-  	catch ( fstream::failure e ) {
-    	cerr << "Failed to load file\n";
-  	}
+    cout << "start of load function." << endl;
+    Helper:: instance()->LoadHelp(path);
+    cout << "end of load function." << endl;
+//    const char* f = path.c_str();
+//    fstream file;
+//    // line
+//    string l;
+//	file.exceptions ( fstream::badbit );
+//  	try 
+//  	{
+//  		// open file
+//	    file.open (f, ios::in);
+//	    while ( getline(file, l) )
+//    	{
+//    		cout << l << endl;
+//    	}
+//	    // close file
+//	    file.close();
+//  	}
+//  	catch ( fstream::failure e ) {
+//    	cerr << "Failed to load file\n";
+//  	}
 }
 
 // ===================================================================================
@@ -62,24 +66,14 @@ void Transactional_Commands:: loadCommand(string path){
 //
 // ===================================================================================
 
-void Transactional_Commands:: dumpCommand(string path)
+void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vector<string>>>& base)
 {
-	const char* f = path.c_str();
-    fstream file;
-	file.exceptions ( fstream::failbit | fstream::badbit );
-  	try 
-  	{
-  		// open/create file
-	    file.open (f, ios::out | ios::app);
-	    // prints to file, overrides old file
-	    file << "Hello World!";
-	    // close file
-	    file.close();
-  	}
-  	catch (ifstream::failure e) {
-    	cerr << "Failed to dump file\n";
-  	}
+    cout << "start of dump function" << endl;
+    Helper:: instance()->DumpHelp(path);
+    cout << "end of dump function" << endl;
 }
+
+
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
@@ -88,7 +82,7 @@ void Transactional_Commands:: inferenceCommand(string command)
 
 void Transactional_Commands:: dropCommand(string command)
 {
-    
+    Helper:: instance()->dropBase(command);
 }
 
 void Transactional_Commands:: factCommand(string fact)
@@ -109,4 +103,6 @@ typedef void (*command_operations)(string);
 map<string,command_operations>& Transactional_Commands:: getMapCommand(){ return commandMap; }
 
 vector<tuple<string,vector<string>>>& Transactional_Commands:: getFact(){ return fact; }
+
+vector<tuple<string,vector<string>>>& Transactional_Commands:: getRule(){ return rule; }
 

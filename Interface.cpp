@@ -3,6 +3,7 @@
 #include "Interface.hpp"
 
 
+<<<<<<< HEAD
 void Interface:: run(){
 
 	//should we make it a static variable?
@@ -57,5 +58,36 @@ void Interface:: run(){
 		}
 	
 	}
+=======
+void Interface:: run()
+{
+    
+    
+    //    Helper::instance()->parseCommand("FACT Father(Roger,John)");
+    //    Helper::instance()->parseCommand("FACT Mother(Marry,John)");
+    //    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
+    //    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
+    //    Helper::instance()->parseCommand("FACT Mother(Margret,Robert)");
+    //    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
+    Helper::instance()->parseCommand("FACT Mother(Nancy,Margret)");
+    Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
+    
+    
+//    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
+//    Helper::instance()->parseCommand("FACT Father(Allen,Margret, Alliosn, Joe, Jim)");
+    //Helper::instance()->parseCommand("INFERENCE Father($X,$Y)");
+//    Helper::instance()->parseCommand("LOAD output.txt");
+//    Helper::instance()->parseCommand("DUMP output2.txt");
+    
+    
+    Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
+    Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y)");
+    
+    
+    
+    
+    
+    
+>>>>>>> e7f090ab5ddc50f9f50dbb82f5f3660b564a9a15
     
 }

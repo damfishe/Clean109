@@ -2,12 +2,18 @@
 
 #include "Common.hpp"
 #include "Interface.hpp"
+#include "Transactional_Commands.hpp"
 
 int main() {
     
     Interface i;
     
+//    Transactional_Commands t;
+    //Tester for the dump command
+//    t.loadCommand("output.txt");
+    
     i.run();
+//    t.dumpCommand("output2.txt");
     
 //    vector<tuple<string,vector<string>>> v; // vector that holds a tuple
 //   
