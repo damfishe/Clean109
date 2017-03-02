@@ -363,12 +363,13 @@ vector<vector<string>> Helper:: retrieveFact(string key, string &param1, string 
 //
 // ===================================================================================
 
-vector<string> Helper:: retrieveRule(vector<string> params, string key)
+tuple<string,string,vector<string>,vector<vector<string>>> Helper:: retrieveRule(vector<string> params, string key)
 {
-    vector<string> query;
-    string logicalOperater;
+    vector<vector<string>> rule;
+    vector<string> ruleTemp;
+    string logicalOp;
     
-//    cout << key << " Rule" << ": ";
+    cout << key << " Rule" << ": ";
     // & in [] of lambda functions allows lambda function to acess local variables
     for_each(tCommands->getRule().begin(), tCommands->getRule().end(),[&](decltype(*tCommands->getRule().begin()) it) -> void // iterates through vector
              {
@@ -431,6 +432,7 @@ vector<string> Helper:: retrieveRule(vector<string> params, string key)
     //    return op(logicalOp, key, params, rule); // need to figure out how to call
     return make_tuple(logicalOp, key, params,rule);
 }
+
 
 vector<vector<vector<string>>> Helper:: op(string logicalOp, string key,vector<string> keyParams,vector<vector<string>> rule)
 {
