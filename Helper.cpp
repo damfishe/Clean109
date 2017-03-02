@@ -426,12 +426,12 @@ tuple<string,string,vector<string>,vector<vector<string>>> Helper:: retrieveRule
                  }
              });
     
-    vector<string> nothing;
-    if(logicalOperater=="AND")
-        return andOperator(key, params, query);
-    else if (logicalOperater=="OR")
-        return orOperator(key, params, query);
-    return nothing;
+//    vector<string> nothing;
+//    if(logicalOperater=="AND")
+//        return andOperator(key, params, query);
+//    else if (logicalOperater=="OR")
+//        return orOperator(key, params, query);
+//    return nothing;
     //    vector<string> nothing;
     //    if(logicalOperater=="AND")
     //        return andOperator(key, params, query);
@@ -659,7 +659,6 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
                     }
                     
                 }
-<<<<<<< HEAD
     // for (int j = 0; j < query.size(); j++)
     // {
     // 	cout << parseKey(query[j]);
@@ -672,7 +671,14 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
 	        // loop through each query
 	        for(int i=0; i < query.size(); i++)
 	        {
-	        	result.push_back(retrieveRule(keyParams,parseKey(query[i])));
+//	        	result.push_back(retrieveRule(keyParams,parseKey(query[i])));
+                
+                // example code of how to use the new return type of retrieveRule
+                // get<3>(opParams) is the return type vector<vector<string>
+//                auto opParams = retrieveRule(parameters,key);
+//                op(get<0>(opParams), get<1>(opParams), get<2>(opParams), get<3>(opParams));
+                
+                
 	        	match.push_back(retrieveFact(parseKey(query[i]),keyParams[0],keyParams[1]));
 	        }
 	        
@@ -683,7 +689,7 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
 	        	{
 	        		for(int j=0; j < paramData[i].size(); j++)
 	        		{
-	        			result.push_back(match[i][param][j]);
+//	        			result.push_back(match[i][param][j]);
 	        		}
 	        	}
 	        }
@@ -802,7 +808,6 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
 //        //     }
 //        // cout << endl;
 //    }
-=======
     
     // grabs data from Fact based on parameters
     if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
@@ -946,7 +951,6 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
     //        //     }
     //        // cout << endl;
     //    }
->>>>>>> a3ddef95a04d04550ea03aab91733dc15459aa40
 }
 
 
