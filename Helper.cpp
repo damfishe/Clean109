@@ -992,9 +992,7 @@ void Helper::dropBase(string command)
         // cout << "index = " << *i << endl;
         count = factIndex[i];
         tCommands->getFact().erase(tCommands->getFact().begin() + count);
-    }
-
-    
+    }    
 	
     vector<int> ruleIndex;
     count = 0;

@@ -15,7 +15,7 @@ bool Valid_FACT_Input(string fact_defenition, bool& user_mess_up)//Checks to see
 	{
 		if (isalpha(fact_defenition[i]) == 0)
 		{
-			cout << "Your input for -> " + fact_defenition + " is incorrect";
+			cout << "Your input for -> " + fact_defenition + " is incorrect" << endl;
 			cout << "The relationship name must be only alphabets, no spaces or symbols, followed by a open parantheses" << endl;
 			cout << "Example: 'Father('" << endl << endl;
 			user_mess_up = true;
@@ -395,9 +395,11 @@ bool all_valid_syntax_functions(string command_names, string command_definitions
 
 void Interface::run()
 {
+	char UserInput[200];
+	string string_version_UserInput;
 
 	string first_part_of_command = " ";//Stores the first part of the command, the type of command itself
-	char second_part_of_command[150];//Stores the second part of the command, the defenition of the command, can take in spaces
+	string second_part_of_command;//Stores the second part of the command, the defenition of the command, can take in spaces
 	int counter_of_char = 0; //counter to keep track of how many characters the user inputed into the array
 
 	char endsession = '\0'; //Takes in if they want to quit the session or 
@@ -413,22 +415,24 @@ void Interface::run()
 		bool first_half_error_commited = false;//Has the user commited an error by miscalling a certain command? 
 		bool second_half_error_commited = false;//Has the user commited an error by having the wrong syntax
 
-		cout << "Please enter one of the commands=>" << endl << "	-FACT(store in a fact)"<< endl << "	-RULE(store in a rule)" 
+		cout << "Please enter one of the commands with their proper content=>" << endl << "	-FACT(store in a fact)"<< endl << "	-RULE(store in a rule)" 
 			<< endl << "	-LOAD(load in a file)" << endl << "	-INFERENCE(issue a query)" << endl 
 			<< "	-DUMP(download all facts and rule into a file)" << endl <<"	-DROP(remove a fact or rule)" << endl << "Enter here:";
-		cin >> first_part_of_command;
-		cin.clear();//Sets a new value for the stream's internal error state flags.
-		cin.ignore(100, '\n');//stop extracting when:(1) up to one hundred char are extracted and ignored or, (2) when you hit the newline char
-		cout << endl;
-
-		cout << "Now, please enter the proper content, syntactically correct with no spaces, for " << first_part_of_command << endl
-			<< "Enter here:";
-
-		cin.get(second_part_of_command, sizeof(second_part_of_command) - 1, '\n');//get char for input stream until either the array is full
+		
+		cin.get(UserInput, sizeof(UserInput) - 1, '\n');//get char for input stream until either the array is full
 		//or the new line char is encountered
 		cin.clear();
 		cin.ignore(100, '\n');
 		cout << endl;
+
+		string_version_UserInput = UserInput;
+
+		string delimeter = " ";
+		size_t pos = 0;
+		pos = string_version_UserInput.find(delimeter);
+		first_part_of_command = string_version_UserInput.substr(0, pos);
+		string_version_UserInput.erase(0, pos + delimeter.length());
+		second_part_of_command = string_version_UserInput;
 
 		for (int i = 0; i < (int)first_part_of_command.size(); ++i) //captalizes all the words in the first part
 		{
