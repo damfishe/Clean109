@@ -582,6 +582,7 @@ void Interface:: run()
     Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Father($Z,$Y)");
     Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y)");
 //    Helper::instance()->parseCommand("INFERENCE Parent($X,$Y)");
+//     Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y) GF");
       Helper::instance()->parseCommand("DUMP output2.txt");
 
 }
