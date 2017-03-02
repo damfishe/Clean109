@@ -33,7 +33,7 @@
 //	}
 //
 //
-//	if (syntax_check.size() == 2 && syntax_check.top() == ')') //if the stack size is two, indiciating there are two parantheses, 
+//	if (syntax_check.size() == 2 && syntax_check.top() == ')') //if the stack size is two, indiciating there are two parantheses,
 //		//and the last thing to be pushed is the closing parentheses, that indicates the strings format was in the proper sythax
 //	{
 //		return true;
@@ -90,7 +90,7 @@
 //		if (rule_defenition[j] == '$')
 //		{
 //			Rule_syntax.push(rule_defenition[j]);
-//			if (isupper(rule_defenition[j + 1]) != 0 && isalpha(rule_defenition[j + 1]) != 0)//if the next char after '$' is one 
+//			if (isupper(rule_defenition[j + 1]) != 0 && isalpha(rule_defenition[j + 1]) != 0)//if the next char after '$' is one
 //				//alphabet and it is uppercase, it is a valid char to have after '$'
 //			{
 //				++check_if_next_char_valid;
@@ -106,15 +106,15 @@
 //		}
 //
 //		if (check_if_next_char_valid != 0 && (rule_defenition[j + 2] == ',' || rule_defenition[j + 2] == ')'))
-//			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates 
+//			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates
 //			//there is only one char after '$', that follows the proper criterias, so pop of the '$' and set the counter back to 0
 //		{
 //			--check_if_next_char_valid;
 //			Rule_syntax.pop();
 //		}
 //
-//		if (rule_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came 
-//			//before it, and the open parentheses is still in the stack, so pop it 
+//		if (rule_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came
+//			//before it, and the open parentheses is still in the stack, so pop it
 //		{
 //			Rule_syntax.pop();
 //		}
@@ -155,7 +155,7 @@
 //		}
 //	}
 //
-//	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed 
+//	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed
 //	if (Rule_syntax.size() == 0 && check_if_next_char_valid == 0 && is_token_and_proper_operator_there == true)
 //	{
 //		cout << "Worked so far" << endl << endl;
@@ -205,7 +205,7 @@
 //		if (inference_defenition[j] == '$')
 //		{
 //			Rule_syntax.push(inference_defenition[j]);
-//			if (isupper(inference_defenition[j + 1]) != 0 && isalpha(inference_defenition[j + 1]) != 0)//if the next char after '$' is one 
+//			if (isupper(inference_defenition[j + 1]) != 0 && isalpha(inference_defenition[j + 1]) != 0)//if the next char after '$' is one
 //				//alphabet and it is uppercase, it is a valid char to have after '$'
 //			{
 //				++check_if_next_char_valid;
@@ -221,22 +221,22 @@
 //		}
 //
 //		if (check_if_next_char_valid != 0 && (inference_defenition[j + 2] == ',' || inference_defenition[j + 2] == ')'))
-//			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates 
+//			//if the char after '$' is valid, and the next NEXT char after that is a comma or a closing parentheses, that indicates
 //			//there is only one char after '$', that follows the proper criterias, so pop of the '$' and set the counter back to 0
 //		{
 //			--check_if_next_char_valid;
 //			Rule_syntax.pop();
 //		}
 //
-//		if (inference_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came 
-//			//before it, and the open parentheses is still in the stack, so pop it 
+//		if (inference_defenition[j] == ')')//if you see a closing parentheses, indicates that it closing the open parentheses that came
+//			//before it, and the open parentheses is still in the stack, so pop it
 //		{
 //			Rule_syntax.pop();
 //		}
 //	}
 //
 //
-//	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed 
+//	//If there's nothing in the stack, if the counter is zero and the token was properly typed, then the RULE sythax is passed
 //	if (Rule_syntax.size() == 0 && check_if_next_char_valid == 0)
 //	{
 //		cout << "Worked so far" << endl << endl;
@@ -316,7 +316,7 @@
 //			size_t ch = line.find(" ");
 //			ch++;
 //			string rest = line.substr(ch);
-//			
+//
 //			for (int i = 0; i < (int)command.size(); ++i) //captalizes all the words in the first part
 //			{
 //				command[i] = toupper(command[i]);
@@ -340,7 +340,7 @@
 //				syntax_correct = Valid_DUMP_Input(rest, counter);
 //			}
 //
-//		
+//
 //			if (syntax_correct == false){
 //				cout << "One of the lines wasn't typed properly, please go back and fix that line in that file" << endl;
 //				cout << "That line is :" << command + " " + rest << endl;
@@ -434,7 +434,7 @@
 //	{
 //		if (counter_to_exit != 0) --counter_to_exit;
 //
-//		bool first_half_error_commited = false;//Has the user commited an error by miscalling a certain command? 
+//		bool first_half_error_commited = false;//Has the user commited an error by miscalling a certain command?
 //		bool second_half_error_commited = false;//Has the user commited an error by having the wrong syntax
 //
 //		cout << "Please enter in one of the six commands you would like to do:" << endl << "	FACT"
@@ -484,7 +484,7 @@
 //			}
 //		}
 //
-//		
+//
 //		if (first_part_of_command == "FACT")
 //		{
 //			if (Valid_FACT_Input(second_part_of_command, counter_to_exit) == false)
@@ -527,7 +527,7 @@
 //				second_half_error_commited = true;
 //			}
 //		}
-//		
+//
 //		cout << "checking if the errors are commited or not" << endl;
 //		if (!first_half_error_commited && !second_half_error_commited)//If there are no errors in the input, pass it into the function
 //		{
@@ -543,7 +543,7 @@
 //			{
 //				break;
 //			}
-//			else//Else, if they don't want to quit, they can indicate how many times they want to loop through before 
+//			else//Else, if they don't want to quit, they can indicate how many times they want to loop through before
 //				//being asked to quit again
 //			{
 //				cout << "How many more turns would you like to go before being asked again to quit? ";
@@ -559,32 +559,36 @@ void Interface:: run()
 {
     
     
-        Helper::instance()->parseCommand("FACT Father(Roger,John)");
-    //    Helper::instance()->parseCommand("FACT Mother(Marry,John)");
-        Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
+//    Helper::instance()->parseCommand("FACT Father(Roger,John)");
+//    Helper::instance()->parseCommand("FACT Mother(Marry,John)");
+    Helper::instance()->parseCommand("FACT Father(Albert,Marry)");
+    Helper::instance()->parseCommand("FACT Father(Albert,Roger)");
+    //        Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
     //    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
     //    Helper::instance()->parseCommand("FACT Mother(Margret,Robert)");
     //    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
-    Helper::instance()->parseCommand("FACT Mother(Nancy,Margret)");
-    Helper::instance()->parseCommand("FACT Mother(Nancy,Roger)");
-    Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
-    Helper::instance()->parseCommand("FACT Mother(Margret,Allen)");
+        Helper::instance()->parseCommand("FACT Mother(Nancy,Margret)");
+        Helper::instance()->parseCommand("FACT Mother(Nancy,Roger)");
+        Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
+        Helper::instance()->parseCommand("FACT Mother(Margret,Allen)");
     
     
-//    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
-//    Helper::instance()->parseCommand("FACT Father(Allen,Margret, Alliosn, Joe, Jim)");
+    //    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");
+    //    Helper::instance()->parseCommand("FACT Father(Allen,Margret, Alliosn, Joe, Jim)");
     //Helper::instance()->parseCommand("INFERENCE Father($X,$Y)");
-//    Helper::instance()->parseCommand("LOAD output.txt");
-//    Helper::instance()->parseCommand("DUMP output2.txt");
+    //    Helper::instance()->parseCommand("LOAD output.txt");
+    //    Helper::instance()->parseCommand("DUMP output2.txt");
     
     
-//    Helper::instance()->parseCommand("RULE Parent($X,$Y):- OR Father($X,$Y) Mother($X,$Y)");
-    Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
-    Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Father($Z,$Y)");
+    Helper::instance()->parseCommand("RULE Parent($X,$Y):- OR Father($X,$Y) Mother($X,$Y)");
+//        Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Mother($Z,$Y)");
+//        Helper::instance()->parseCommand("RULE GrandMother($X,$Y):- AND Mother($X,$Z) Father($Z,$Y)");
 //    Helper::instance()->parseCommand("RULE GrandFather($X,$Y):- AND Father($X,$Z) Parent($Z,$Y)");
-    Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y) GF");
-//    Helper::instance()->parseCommand("INFERENCE Parent($X,$Y)");
-//     Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y) GF");
-//      Helper::instance()->parseCommand("DUMP output2.txt");
-
+    //    Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y) GF");
+        Helper::instance()->parseCommand("INFERENCE Parent($X,$Y)");
+//        Helper::instance()->parseCommand("INFERENCE Father($X,$Y)");
+//         Helper::instance()->parseCommand("INFERENCE GrandMother($X,$Y)");
+//    Helper::instance()->parseCommand("INFERENCE GrandFather($X,$Y)");
+    //      Helper::instance()->parseCommand("DUMP output2.txt");
+    
 }
