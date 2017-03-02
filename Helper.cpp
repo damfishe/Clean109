@@ -1252,7 +1252,7 @@ void Helper:: ParseQuery(string rest)
         cout << "This is the key" << endl;
         cout << key << endl;
         
-        auto opParams = retrieveRule(parameters,key);
+        auto opParams = retrieveRule(parameters,key2);
         tempFacts = op(get<0>(opParams), get<1>(opParams), get<2>(opParams), get<3>(opParams));; //Use the key2 to perfrom the proper rule functionality.
     }
     //cout << ch << " This is the position of the space"
