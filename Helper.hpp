@@ -30,14 +30,15 @@ public:
     vector<vector<string>> op(string,string,vector<string>,vector<vector<string>>);
     vector<vector<string>> andOperator(string,vector<string>,vector<string>);
     vector<vector<string>> orOperator(string,vector<string>,vector<string>);
-    vector<vector<string>> vectorCondense(vector<vector<vector<string>>> v);
+    vector<vector<string>> vectorCondense(vector<vector<vector<string>>>);
+    vector<string> singleVecCondense(vector<vector<string>>);
     void parseCommand(string);
     void parseDefinition(char,string);
     vector<string> parseRule(string);
-    string parseKey(string &input);
+    string parseKey(string&);
     vector<vector<string>> retrieveFact(string,string&,string&);
     tuple<string,string,vector<string>,vector<vector<string>>> retrieveRule(vector<string>,string);
-    vector<string> parseParams(string &input);
+    vector<string> parseParams(string&);
     
 };
 
