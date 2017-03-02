@@ -7,13 +7,13 @@ Helper* Helper:: h_instance = nullptr; // used to initialized pointer
 Helper:: Helper()
 {
     
-    tCommands = new Transactional_Commands;  //creates an object called tCommands.
+    tCommands = new Transactional_Commands;
 }
 
 Helper:: ~Helper()
 {
     
-    delete tCommands; //descructor for Helper.
+    delete tCommands;
 }
 
 // ===================================================================================
@@ -49,12 +49,14 @@ void Helper::parseCommand(string user_input)
     //string dump_string = "Dump";
     stringstream line(user_input);  //takes the contents of user_input and copies it to a string object
     // "Fact Father(Rodger, John)
+    //cout << line << endl;
     string rule_check = ":"; //creates a string with : to see if a rule is being inputted.
     
     string command = ""; //creating an empty string to hold the parsed out command
     getline(line, command,' ');  //take the contects of the input before the space (the command) and assign it to the command string.
     
     size_t ch = user_input.find(" ");  // find the location of the space in our string
+    //    cout << ch << endl; //The index of the space in our stirng
     ch++; //increment size_t to account for the extra sapce.
     string rest = user_input.substr (ch);
     
@@ -361,13 +363,12 @@ vector<vector<string>> Helper:: retrieveFact(string key, string &param1, string 
 //
 // ===================================================================================
 
-tuple<string,string,vector<string>,vector<vector<string>>> Helper:: retrieveRule(vector<string> params, string key)
+vector<string> Helper:: retrieveRule(vector<string> params, string key)
 {
-    vector<vector<string>> rule;
-    vector<string> ruleTemp;
-    string logicalOp;
+    vector<string> query;
+    string logicalOperater;
     
-    cout << key << " Rule" << ": ";
+//    cout << key << " Rule" << ": ";
     // & in [] of lambda functions allows lambda function to acess local variables
     for_each(tCommands->getRule().begin(), tCommands->getRule().end(),[&](decltype(*tCommands->getRule().begin()) it) -> void // iterates through vector
              {
@@ -1047,7 +1048,7 @@ void Helper:: DumpHelp(string path)
         // open/create file
         file.open (f, ios::out);
         if(Factbase.size() != 0){
-            for_each(Factbase.begin(), Factbase.end(),[&](decltype(*Factbase.begin()) it) -> void // iterates through vector
+            for_each(Factbase.begin(), Factbase.end()-1,[&](decltype(*Factbase.begin()) it) -> void // iterates through vector
                      {
                          string temp = "FACT ";
                          temp.append(get<0>(it));
@@ -1226,6 +1227,7 @@ void Helper::dropBase(string command)
 {
     int count = 0; // iterates through the for loops
     vector<int> factIndex;
+
     for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getFact().begin(); i != tCommands->getFact().end(); i++) // iterates through vector
     {
         // cout << "count = " << count << endl;
@@ -1237,13 +1239,13 @@ void Helper::dropBase(string command)
         count++;
     }
     
-    for(vector<int>::iterator i = factIndex.end() -1; i != factIndex.begin() - 1; i--)
+	for (int i = factIndex.size() - 1; i >= 0; --i)
     {
         // cout << "index = " << *i << endl;
-        count = *i;
+        count = factIndex[i];
         tCommands->getFact().erase(tCommands->getFact().begin() + count);
-    }
-    
+    }    
+	
     vector<int> ruleIndex;
     count = 0;
     for(vector<tuple<string,vector<string>>>::iterator i = tCommands->getRule().begin(); i != tCommands->getRule().end(); i++) // iterates through vector
@@ -1257,12 +1259,13 @@ void Helper::dropBase(string command)
         count++;
     }
     
-    for(vector<int>::iterator i = ruleIndex.end() -1; i != ruleIndex.begin() - 1; i--)
+    for(int i = ruleIndex.size()-1; i>=0; --i)
     {
         // cout << "index = " << *i << endl;
-        count = *i;
+		count = ruleIndex[i];
         tCommands->getRule().erase(tCommands->getRule().begin() + count);
     }
+	
 }
 
 void Helper:: ParseQuery(string rest)

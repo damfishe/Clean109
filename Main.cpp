@@ -4,8 +4,7 @@
 #include "Interface.hpp"
 #include "Transactional_Commands.hpp"
 
-int main()
-{
+int main() {
     
     Interface i;
     
