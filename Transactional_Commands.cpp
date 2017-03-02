@@ -30,28 +30,7 @@ Transactional_Commands:: Transactional_Commands(){
 // ===================================================================================
 
 void Transactional_Commands:: loadCommand(string path){
-    cout << "start of load function." << endl;
     Helper:: instance()->LoadHelp(path);
-    cout << "end of load function." << endl;
-//    const char* f = path.c_str();
-//    fstream file;
-//    // line
-//    string l;
-//	file.exceptions ( fstream::badbit );
-//  	try 
-//  	{
-//  		// open file
-//	    file.open (f, ios::in);
-//	    while ( getline(file, l) )
-//    	{
-//    		cout << l << endl;
-//    	}
-//	    // close file
-//	    file.close();
-//  	}
-//  	catch ( fstream::failure e ) {
-//    	cerr << "Failed to load file\n";
-//  	}
 }
 
 // ===================================================================================
@@ -68,50 +47,65 @@ void Transactional_Commands:: loadCommand(string path){
 
 void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vector<string>>>& base)
 {
-    cout << "start of dump function" << endl;
     Helper:: instance()->DumpHelp(path);
-    cout << "end of dump function" << endl;
 }
 
-
+// ===================================================================================
+// 	INFERERNCE
+// ===================================================================================
+//	Issue a query.
+//
+//	Input: 
+//		command [IN] - string containing the transactional command.
+//
+// ===================================================================================
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
 	Helper:: instance()->parseDefinition('i',command);
 	Helper:: instance()->ParseQuery(command);
-   //Helper:: instance()->parseDefinition('i',command);
-//    if () // saves inference
-//    {
-//  
-//        vector<string> blah = retrieveRule(parameters,key);
-//        for(auto a: blah)
-//            cout << a << ;
-//        
-//        void storeBase(Helper:: t,vector<string>&,string);
-//
-//
-//    }
-//    else{ // just prints
-//        vector<string> blah = retrieveRule(parameters,key);
-//        for(auto a: blah)
-//            cout << a << ;
-//
-//    }
 }
+
+// ===================================================================================
+// 	DROP
+// ===================================================================================
+//	Drop facts or a rule.
+//
+//	Input: 
+//		command [IN] - string containing the transactional command.
+//
+// ===================================================================================
 
 void Transactional_Commands:: dropCommand(string command)
 {
     Helper:: instance()->dropBase(command);
 }
 
+// ===================================================================================
+// 	FACT
+// ===================================================================================
+//	Define a fact.
+//
+//	Input: 
+//		fact [IN] - string containing the fact.
+//
+// ===================================================================================
+
 void Transactional_Commands:: factCommand(string fact)
 {
-//    cout << "Fact method called\n";
-//    cout <<"Fact is: " << fact << endl;
-    
     Helper:: instance()->parseDefinition('f',fact);
     
 }
+
+// ===================================================================================
+// 	RULE
+// ===================================================================================
+//	Define a rule.
+//
+//	Input: 
+//		rule [IN] - string containing the rule.
+//
+// ===================================================================================
 
 void Transactional_Commands:: ruleCommand(string rule)
 {
@@ -125,7 +119,7 @@ vector<tuple<string,vector<string>>>& Transactional_Commands:: getFact(){ return
 
 vector<tuple<string,vector<string>>>& Transactional_Commands:: getRule(){ return rule; }
 
-/*
+/* For testing purposes
 void Transactional_Commands::print(){
 	auto j = 0;
 	cout << "FACT" << endl;
