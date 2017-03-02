@@ -587,14 +587,13 @@ vector<vector<string>> Helper:: andOperator(string key, vector<string> keyParams
         
         for(auto v: relationalData) // loops through outer vector: v is the actual vector
             for(int i=0; i<v.size(); i++)  // loops through inner vector: vv is the actual vector
-                for(int b=0; b < match.size(); b++)
-                    for(int k=0; k < match[b].size(); k++) // iterates through match's inner vector
+                    for(int k=0; k < match[i].size(); k++) // iterates through match's inner vector
                         for(int j=0; j<v[i].size(); j++) // loops through data in relationalData
                         { // doing it this way eliminate v[x][i]; just another way of looping
-                            if (match[b][k].compare(v[b][j]) != 0)
+                            if (match[i][k].compare(v[i][j]) != 0)
                             {
-                                cout << v[b][j] << " ";
-                                inferData[b].push_back(v[b][j]);
+                                cout << v[i][j] << " ";
+                                inferData[i].push_back(v[i][j]);
                                 
                             }
                         }
@@ -668,10 +667,13 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
 	    {
 	        // this is where the logical operator logic happens
 	        vector<vector<vector<string>>> match;
+            vector<vector<vector<string>>> tempResult;
+            
 	        // loop through each query
 	        for(int i=0; i < query.size(); i++)
 	        {
-//	        	result.push_back(retrieveRule(keyParams,parseKey(query[i])));
+                
+	        	tempResult.push_back(retrieveFact(parseKey(query[i]), keyParams[1], keyParams[1]));
                 
                 // example code of how to use the new return type of retrieveRule
                 // get<3>(opParams) is the return type vector<vector<string>
@@ -683,16 +685,18 @@ vector<vector<string>> Helper:: orOperator(string key, vector<string> keyParams,
 	        }
 	        
 	        cout << "RESULTS " << endl;
-	        for(int i = 0; i < match.size(); i++)
-	        {
-	        	for(int param = 0; param < match[i].size(); param++)
-	        	{
-	        		for(int j=0; j < paramData[i].size(); j++)
-	        		{
-//	        			result.push_back(match[i][param][j]);
-	        		}
-	        	}
-	        }
+//	        for(int i = 0; i < match.size(); i++)
+//	        {
+//	        	for(int param = 0; param < match[i].size(); param++)
+//	        	{
+//	        		for(int j=0; j < paramData[i].size(); j++)
+//	        		{
+////	        			result.push_back(match[i][param][j]);
+//	        		}
+//	        	}
+//	        }
+            
+            result = vectorCondense(tempResult);
 	    }
 	// }
     return result;
