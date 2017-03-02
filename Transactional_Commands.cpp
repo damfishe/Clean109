@@ -4,7 +4,8 @@
 #include "Helper.hpp" // foward declaration
 
 
-Transactional_Commands:: Transactional_Commands(){
+Transactional_Commands:: Transactional_Commands()
+{
     
     commandMap["FACT"] = factCommand;
     commandMap["RULE"] = ruleCommand;

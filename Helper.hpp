@@ -8,7 +8,8 @@
 class Transactional_Commands; // forward declaration
 
 // Singleton Class
-class Helper{
+class Helper
+{
     
 private:
     Helper(); // constructor is private to no instances of class can be created (Singleton)
@@ -26,14 +27,15 @@ public:
     void storeBase(vector<tuple<string,vector<string>>>&,vector<string>&,string);
     //void getBase(vector<tuple<string,vector<string>>>&,string);
     void dropBase(string);
-    vector<string> andOperator(string,vector<string>,vector<string>);
-    void orOperator(string,vector<string>,vector<string>);
+    vector<vector<string>> andOperator(string,vector<string>,vector<string>);
+    void orOperator(string,vector<string>,vector<vector<string>>);
+    vector<vector<vector<string>>> op(string,string,vector<string>,vector<vector<string>>);
     void parseCommand(string);
     void parseDefinition(char,string);
     vector<string> parseRule(string);
     string parseKey(string &input);
     vector<vector<string>> retrieveFact(string,string&,string&);
-    vector<string> retrieveRule(vector<string>,string);
+    vector<vector<vector<string>>> retrieveRule(vector<string>,string);
     vector<string> parseParams(string &input);
     
 };

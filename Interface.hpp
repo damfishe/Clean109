@@ -7,7 +7,8 @@
 #include "Transactional_Commands.hpp"
 #include "Helper.hpp"
 
-class Interface{
+class Interface
+{
     
 private:
     bool keepRunning;

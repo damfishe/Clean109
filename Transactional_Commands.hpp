@@ -11,7 +11,8 @@ typedef void (*command_operations)(string);
 
 class Helper; // foward declaration
 
-class Transactional_Commands {
+class Transactional_Commands
+{
 //    friend class Helper;
 private:
     map<string, command_operations> commandMap;
