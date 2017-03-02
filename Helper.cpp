@@ -796,7 +796,7 @@ void Helper:: DumpHelp(string path)
         // open/create file
         file.open (f, ios::out);
         if(Factbase.size() != 0){
-            for_each(Factbase.begin(), Factbase.end(),[&](decltype(*Factbase.begin()) it) -> void // iterates through vector
+            for_each(Factbase.begin(), Factbase.end()-1,[&](decltype(*Factbase.begin()) it) -> void // iterates through vector
                      {
                          string temp = "FACT ";
                          temp.append(get<0>(it));

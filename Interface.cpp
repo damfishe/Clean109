@@ -336,7 +336,7 @@ bool Valid_LOAD_Input(string path, bool& user_mess_up)
 bool Quit_Session(char answer)//Ask the user if they want to end the program, if they say yes, ask if they have saved: Yes = Quit, No = DUMP, then quit
 //if the user says no instead, ask them how many times they want the program to loop through until being asked to quit again
 {
-	cout << "Do you want to continue or quit? Y for continue, N for quit: ";
+	cout << "Do you want to continue? Y for YES, N for NO: ";
 	cin >> answer;
 	cout << '\n';
 
