@@ -4,7 +4,8 @@
 #include "Helper.hpp" // foward declaration
 
 
-Transactional_Commands:: Transactional_Commands(){
+Transactional_Commands:: Transactional_Commands()
+{
     
     commandMap["FACT"] = factCommand;
     commandMap["RULE"] = ruleCommand;
@@ -78,8 +79,8 @@ void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vec
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
-   Helper:: instance()->ParseQuery(command);
-   //Helper:: instance()->parseDefinition('i',command);
+//   Helper:: instance()->ParseQuery(command);
+   Helper:: instance()->parseDefinition('i',command);
 //    if () // saves inference
 //    {
 //  
