@@ -36,7 +36,7 @@ public:
     vector<string> parseRule(string);
     string parseKey(string &input);
     vector<vector<string>> retrieveFact(string,string&,string&);
-    vector<vector<string>> retrieveRule(vector<string>,string);
+    tuple<string,string,vector<string>,vector<vector<string>>> retrieveRule(vector<string>,string);
     vector<string> parseParams(string &input);
     
 };
