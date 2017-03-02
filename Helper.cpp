@@ -424,7 +424,7 @@ vector<string> Helper:: retrieveRule(vector<string> params, string key)
     if(logicalOperater=="AND")
         return andOperator(key, params, query);
     else if (logicalOperater=="OR")
-        orOperator(key, params, query);
+        return orOperator(key, params, query);
     return nothing;
 }
 
@@ -597,32 +597,36 @@ vector<string> Helper:: orOperator(string key, vector<string> keyParams, vector<
                     }
                     
                 }
-    
-    // grabs data from Fact based on parameters
-    if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
-    {
-        // this is where the logical operator logic happens
-        vector<vector<vector<string>>> match;
-        // loop through each query
-        for(int i=0; i < query.size(); i++)
-        {
-        	match.push_back(retrieveFact(parseKey(query[i]),keyParams[0],keyParams[1]));
-        }
-        
-        cout << "RESULTS " << endl;
-        for(int i = 0; i < match.size(); i++)
-        {
-        	for(int param = 0; param < match[i].size(); param++)
-        	{
-        		for(int j=0; j < paramData[i].size(); j++)
-        		{
-        			result.push_back(match[i][param][j]);
-        		}
-        	}
-        }
-    }
+    // for (int j = 0; j < query.size(); j++)
+    // {
+    // 	cout << parseKey(query[j]);
+    	// result.push_back(retrieveRule(keyParams, parseKey(query[j])));
+	    // grabs data from Fact based on parameters
+	    if (paramCheck.size() != paramData[0].size()) // checks to see if all parameters match, if they dont proceed
+	    {
+	        // this is where the logical operator logic happens
+	        vector<vector<vector<string>>> match;
+	        // loop through each query
+	        for(int i=0; i < query.size(); i++)
+	        {
+	        	result.push_back(retrieveRule(keyParams,parseKey(query[i])));
+	        	match.push_back(retrieveFact(parseKey(query[i]),keyParams[0],keyParams[1]));
+	        }
+	        
+	        cout << "RESULTS " << endl;
+	        for(int i = 0; i < match.size(); i++)
+	        {
+	        	for(int param = 0; param < match[i].size(); param++)
+	        	{
+	        		for(int j=0; j < paramData[i].size(); j++)
+	        		{
+	        			result.push_back(match[i][param][j]);
+	        		}
+	        	}
+	        }
+	    }
+	// }
     return result;
-=======
 //    vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
 //    vector<bool> paramCheck;
 //    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
@@ -735,7 +739,6 @@ vector<string> Helper:: orOperator(string key, vector<string> keyParams, vector<
 //        //     }
 //        // cout << endl;
 //    }
->>>>>>> cc700ca57582308ec4ad6c8129f7960be29f1197
 }
 
 
