@@ -567,7 +567,7 @@ void Interface:: run()
     //    Helper::instance()->parseCommand("FACT Mother(Marry,Albert)");
     Helper::instance()->parseCommand("FACT Mother(Nancy,Margret)");
     Helper::instance()->parseCommand("FACT Mother(Margret,Bob)");
-    Helper::instance()->parseCommand("FACT Mother(Margret,Allen");
+    Helper::instance()->parseCommand("FACT Mother(Margret,Allen)");
     
     
 //    Helper::instance()->parseCommand("FACT Father(Roger,Albert)");

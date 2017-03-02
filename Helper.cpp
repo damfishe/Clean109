@@ -7,13 +7,13 @@ Helper* Helper:: h_instance = nullptr; // used to initialized pointer
 Helper:: Helper()
 {
     
-    tCommands = new Transactional_Commands;
+    tCommands = new Transactional_Commands;  //creates an object called tCommands.
 }
 
 Helper:: ~Helper()
 {
     
-    delete tCommands;
+    delete tCommands; //descructor for Helper.
 }
 
 // ===================================================================================
@@ -49,14 +49,12 @@ void Helper::parseCommand(string user_input)
     //string dump_string = "Dump";
     stringstream line(user_input);  //takes the contents of user_input and copies it to a string object
     // "Fact Father(Rodger, John)
-    //cout << line << endl;
     string rule_check = ":"; //creates a string with : to see if a rule is being inputted.
     
     string command = ""; //creating an empty string to hold the parsed out command
     getline(line, command,' ');  //take the contects of the input before the space (the command) and assign it to the command string.
     
     size_t ch = user_input.find(" ");  // find the location of the space in our string
-    //    cout << ch << endl; //The index of the space in our stirng
     ch++; //increment size_t to account for the extra sapce.
     string rest = user_input.substr (ch);
     
@@ -87,9 +85,9 @@ void Helper::parseCommand(string user_input)
 }
 
 // ===================================================================================
-// Parse Definition
+// Parse Key
 // ===================================================================================
-// 	Used to parse rest of string passed from parseCommand
+// 	Used to parse rest of string passed from parseCommand and other functions.
 //
 //
 //
@@ -214,24 +212,18 @@ vector<string> Helper:: parseRule(string input)
 
 void Helper:: parseDefinition(char function, string def)
 {
-    
-    if (function=='f' || function=='i')
+ //char acts as a tag for our function so that def can go through the proper conditional branch.
+// def represents the entire string without the command.  Example being Father(Roger, John)
+    if (function=='f') //
     {
-        string key = parseKey(def);
+        string key = parseKey(def); //parse the key part of def.  Example being Father.
         cout << "Key: " << key << endl;
-        vector<string> parameters = parseParams(def);
+        vector<string> parameters = parseParams(def); //obtain the perameters of our string.  Example being (Roger, John).
         
-        
-        if(function=='f')
-            storeBase(tCommands->getFact(), parameters, key);
-//        else if(function=='i')
-//        {
-////           vector<string> blah = retrieveRule(parameters,key); //commented out for now since it is all being handled in parse query.
-//            
-//            retrieveRule(parameters,key);
-//        }
+
+        storeBase(tCommands->getFact(), parameters, key); //send the parameters and the key to be sto
     }
-    else if (function=='r') // for rule
+    else if (function=='r') // if our tagged string is a rule
     {
         
         string key = parseKey(def);
@@ -622,7 +614,7 @@ vector<string> Helper:: orOperator(string key, vector<string> keyParams, vector<
         }
     }
     return result;
-=======
+
 //    vector<vector<string>> paramData; // holds parameters from each individual querey ie. Mother($x,$z) Mother($z,$y)
 //    vector<bool> paramCheck;
 //    vector<tuple<int,int,int,int>> paramIndex; // tuple<vectorIndex1,param,vectorIndex2,param>
@@ -735,7 +727,7 @@ vector<string> Helper:: orOperator(string key, vector<string> keyParams, vector<
 //        //     }
 //        // cout << endl;
 //    }
->>>>>>> cc700ca57582308ec4ad6c8129f7960be29f1197
+
 }
 
 
