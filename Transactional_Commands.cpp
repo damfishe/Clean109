@@ -4,8 +4,7 @@
 #include "Helper.hpp" // foward declaration
 
 
-Transactional_Commands:: Transactional_Commands()
-{
+Transactional_Commands:: Transactional_Commands(){
     
     commandMap["FACT"] = factCommand;
     commandMap["RULE"] = ruleCommand;
@@ -70,7 +69,6 @@ void Transactional_Commands:: loadCommand(string path){
 void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vector<string>>>& base)
 {
     cout << "start of dump function" << endl;
-    cout << path << endl;
     Helper:: instance()->DumpHelp(path);
     cout << "end of dump function" << endl;
 }
@@ -79,7 +77,8 @@ void Transactional_Commands:: dumpCommand(string path) //vector<tuple<string,vec
 
 void Transactional_Commands:: inferenceCommand(string command)
 {
-   Helper:: instance()->ParseQuery(command);
+	Helper:: instance()->parseDefinition('i',command);
+	Helper:: instance()->ParseQuery(command);
    //Helper:: instance()->parseDefinition('i',command);
 //    if () // saves inference
 //    {
@@ -126,3 +125,25 @@ vector<tuple<string,vector<string>>>& Transactional_Commands:: getFact(){ return
 
 vector<tuple<string,vector<string>>>& Transactional_Commands:: getRule(){ return rule; }
 
+/*
+void Transactional_Commands::print(){
+	auto j = 0;
+	cout << "FACT" << endl;
+	for_each(fact.begin(), fact.end(), [&](decltype(*fact.begin()) it) -> void // iterates through vector
+	{
+
+		for (int i = 0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
+		{
+			cout << j << "   " << get<0>(it) << "   " << get<1>(it)[i] << endl; // prints an index in vector
+		}
+		j++;
+	});    cout << "RULE" << endl;
+	for_each(rule.begin(), rule.end(), [&](decltype(*rule.begin()) it) -> void // iterates through vector
+	{
+		for (int i = 0; i < get<1>(it).size(); i++) // iterates through vector inside tuple
+		{
+			cout << get<0>(it) << "   " << get<1>(it)[i] << endl; // prints an index in vector
+		}
+	});
+}
+*/

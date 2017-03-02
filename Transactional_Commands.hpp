@@ -11,8 +11,7 @@ typedef void (*command_operations)(string);
 
 class Helper; // foward declaration
 
-class Transactional_Commands
-{
+class Transactional_Commands {
 //    friend class Helper;
 private:
     map<string, command_operations> commandMap;
@@ -34,6 +33,7 @@ public:
     static void dropCommand(string);
     static void factCommand(string);
     static void ruleCommand(string);
+	//void print();
 };
 
 #endif /* Transactional_Commands_hpp */
